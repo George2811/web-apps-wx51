@@ -1,28 +1,27 @@
 <template>
   <v-app>
     <tool-bar></tool-bar>
-
     <v-main>
-      <home-preview></home-preview>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
 
-import HomePreview from "./components/home-preview";
 import ToolBar from "./components/tool-bar";
-
 export default {
   name: 'App',
-
   components: {
-    ToolBar,
-    HomePreview
+    ToolBar
   },
-
   data: () => ({
     //
   }),
 };
 </script>
+<style>
+main{
+  margin-top: 70px;
+}
+</style>

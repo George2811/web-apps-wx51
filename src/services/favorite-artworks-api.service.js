@@ -8,7 +8,7 @@ class FavoriteArtworksApiService {
         return http.post(`/hobbyists/${hobbyistId}/artworks`, artworkId);
     }
     unassign(hobbyistId, artworkId) {
-        return http.delete(`/hobbyists/${hobbyistId}/artworks/${artworkId}`);;
+        return http.delete(`/hobbyists/${hobbyistId}/artworks/${artworkId}`);
     }
 }
 
