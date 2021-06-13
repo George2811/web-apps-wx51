@@ -3,22 +3,24 @@
     <tool-bar></tool-bar>
 
     <v-main>
-      <home-preview></home-preview>
+      <about-view></about-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
 
-import HomePreview from "./components/home-preview";
+
 import ToolBar from "./components/tool-bar";
+import AboutView from "./components/about-view";
 
 export default {
   name: 'App',
 
   components: {
-    ToolBar,
-    HomePreview
+    AboutView,
+    ToolBar
+
   },
 
   data: () => ({
