@@ -3,22 +3,24 @@
     <tool-bar></tool-bar>
 
     <v-main>
-      <home-preview></home-preview>
+      <terms-and-conditions-view></terms-and-conditions-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
 
-import HomePreview from "./components/home-preview";
+
 import ToolBar from "./components/tool-bar";
+import TermsAndConditionsView from "./components/terms-and-conditions-view";
 
 export default {
   name: 'App',
 
   components: {
-    ToolBar,
-    HomePreview
+    TermsAndConditionsView,
+    ToolBar
+
   },
 
   data: () => ({
