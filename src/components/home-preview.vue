@@ -1,12 +1,13 @@
 <template>
   <div>
-    <v-card>
-      <v-img
-          src="../assets/img/principal-img.jpg"
-          max-height="400px"
-          position="relative"
-      ></v-img>
-    </v-card>
+    <v-carousel :show-arrows="true" cycle height="400">
+      <v-carousel-item
+          v-for="(item,i) in items"
+          :key="i"
+          :src="item.src"
+      >
+      </v-carousel-item>
+    </v-carousel>
 
     <v-container>
       <v-card elevation="0" class="mx-5 mt-15">
@@ -64,7 +65,21 @@ export default {
         {hola: 1},
         {hola: 1},
         {hola: 1}
-      ]
+      ],
+      items: [
+        {
+          src: require('../assets/img/principal-img.jpg'),
+        },
+        {
+          src: 'https://picsum.photos/id/1050/6000/4000.jpg',
+        },
+        {
+          src: 'https://picsum.photos/id/1049/3900/3120.jpg',
+        },
+        {
+          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+        },
+      ],
     }
   }
 }
