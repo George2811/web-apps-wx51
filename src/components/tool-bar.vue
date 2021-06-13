@@ -1,7 +1,7 @@
 <template>
     <v-card color="grey lighten-4" flat tile>
       <v-toolbar dense  height="70px">
-        <v-toolbar-title class="red--text font-weight-bold text-h4 ml -4">Perustars</v-toolbar-title>
+        <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4">Perustars</v-toolbar-title>
         <v-spacer></v-spacer>
         <div>
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
@@ -26,7 +26,6 @@ export default {
   z-index: 200;
   width: 100%;
 }
-
 .text-toolbar-btn {
   text-transform: none;
   letter-spacing: 0.02em;

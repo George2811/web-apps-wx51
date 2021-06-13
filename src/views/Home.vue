@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <sidebar></sidebar>
+    <side-bar></side-bar>
       <v-container class="my-0 mx-0 px-0" fluid>
         <h1>titulo</h1>
         <p>Lorem ipsum dolor sit amet, consectetur
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-
-import sidebar from "@/components/sidebar";
+import SideBar from '../components/side-bar'
 
 export default {
   name: 'Home',
   components: {
-    sidebar
+    SideBar
+
   },
   data: () => ({
     cards: ['Today', 'Yesterday'],

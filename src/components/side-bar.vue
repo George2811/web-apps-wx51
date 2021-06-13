@@ -1,12 +1,11 @@
 <template>
   <v-navigation-drawer v-model="drawer" app>
-
-    <v-divider></v-divider>
+    <br>
     <div class="text-subtitle-1">Tus artistas</div>
     <v-virtual-scroll
         :items="links"
         :item-height="50"
-        height="180"
+        height="190"
     >
       <template v-slot="{ item }">
         <v-list-item link>
@@ -26,7 +25,7 @@
     <v-virtual-scroll
         :items="links"
         :item-height="50"
-        height="180"
+        height="190"
     >
       <template v-slot="{ item }">
         <v-list-item link>
@@ -46,7 +45,7 @@
 
 <script>
 export default {
-  name: "sidebar",
+  name: "side-bar",
   data: () => ({
     links: [
       ['mdi-inbox-arrow-down', 'Inbox'],

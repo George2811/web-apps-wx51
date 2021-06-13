@@ -1,13 +1,16 @@
 <template>
-  <v-card max-width="270px" elevation="3">
+  <v-card class="artwork-card" max-width="250" elevation="3">
     <v-img
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
+        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        alt="Photo"
     ></v-img>
     <div class="mx-3">
-      <v-card-title class="text-body-1 px-0 font-weight-bold pb-2">NombreArtwork</v-card-title>
-      <p class="text-caption text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit adipisicing elit elit.
-        Dignissimos dolorem minima minus siu.</p>
+      <v-card-title class="text-body-1 px-0 font-weight-bold pb-2">Name Artwork</v-card-title>
+      <p class="text-caption text-justify">
+        Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit adipisicing elit elit.
+        Dignissimos dolorem minima minus siu.
+      </p>
     </div>
     <v-card-actions class="d-flex justify-space-between mx-2 text-action-btn">
       <v-btn class="text-action-btn" elevation="0" color="white">
@@ -20,7 +23,7 @@
 
 <script>
 export default {
-  name: "artwork-preview"
+  name: "artwork-card"
 }
 </script>
 
