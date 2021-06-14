@@ -55,9 +55,9 @@ export default {
     ],
     titles: [
       'title1',
-      'title1',
-      'title1',
-      'title1'
+      'title2',
+      'title3',
+      'title4'
     ]
   })
 }
@@ -70,4 +70,5 @@ export default {
 .text-subtitle-1{
   margin-left: 20px;
 }
+
 </style>

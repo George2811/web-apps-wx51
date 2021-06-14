@@ -14,7 +14,7 @@
         <v-card-title class="px-0 text-h5 font-weight-medium">
           <v-icon>mdi-palette</v-icon>Obras Destacadas
         </v-card-title>
-        <v-list-item-content class="d-flex flex-row justify-space-between">
+        <v-list-item-content class="d-flex flex-row justify-sm-space-between justify-center">
           <artwork-card v-for="(artwork,i) in cards" :key="i" class="mb-10"></artwork-card>
         </v-list-item-content>
       </v-card>
@@ -24,7 +24,7 @@
         <v-card-title class="px-0 text-h5 font-weight-medium">
           <v-icon>mdi-palette</v-icon>Nuevos Artistas
         </v-card-title>
-        <v-list-item-content class="d-flex flex-row justify-space-between">
+        <v-list-item-content class="d-flex flex-row justify-sm-space-between justify-center">
           <artist-card v-for="(artwork,i) in cards" :key="i" class="mb-10"></artist-card>
         </v-list-item-content>
       </v-card>
@@ -34,7 +34,7 @@
         <v-card-title class="px-0 text-h5 font-weight-medium">
           <v-icon>mdi-palette</v-icon>Próximos eventos
         </v-card-title>
-        <v-list-item-content class="d-flex flex-row justify-space-between">
+        <v-list-item-content class="d-flex flex-row justify-sm-space-between justify-center">
           <event-card v-for="(artwork,i) in cards" :key="i" class="mb-10"></event-card>
         </v-list-item-content>
       </v-card>
@@ -71,13 +71,13 @@ export default {
           src: require('../assets/img/principal-img.jpg'),
         },
         {
-          src: 'https://picsum.photos/id/1050/6000/4000.jpg',
-        },
-        {
           src: 'https://picsum.photos/id/1049/3900/3120.jpg',
         },
         {
           src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+        },
+        {
+          src: 'https://picsum.photos/id/1050/6000/4000.jpg',
         },
       ],
     }

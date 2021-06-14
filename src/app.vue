@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
+    <tool-bar :logged="logged"></tool-bar>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -16,8 +16,10 @@ export default {
     ToolBar
   },
   data: () => ({
-    //
+    logged: false
   }),
+  created() {
+  }
 };
 </script>
 <style>
