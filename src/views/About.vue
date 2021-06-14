@@ -4,7 +4,7 @@
   <div class="cover">
     <div class="img"></div>
     <div class="center">
-      <div class="title">Hay un artista en tu interior</div>
+      <div class="title text-h2">Hay un artista en tu interior</div>
       <br>
       <br>
       <div class="sub_title">Descúbrelo</div>
@@ -89,12 +89,11 @@
         Copyright © 2021 UX-Team
       </div>
       <div class="section_socialmedia">
-        <a href= "https://facebook.com" target="_blank"><i class="fab fa-facebook-f facebook"></i></a>
+    <!--<a href= "https://facebook.com" target="_blank"><i class="fab fa-facebook-f facebook"></i></a>
         <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram instagram"></i></a>
-        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter twitter"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter twitter"></i></a>-->
+        <terms-and-conditions dialogValue="dialogValue"></terms-and-conditions>
       </div>
-      <br>
-      <a >Términos y condiciones</a>
     </div>
   </footer>
 
@@ -103,8 +102,17 @@
 </template>
 
 <script>
+import TermsAndConditions from '../components/terms-and-conditions'
 export default {
-  name: "about-view"
+  name: "about-view",
+  components:{
+    TermsAndConditions
+  },
+  data () {
+    return {
+      dialogValue: false,
+    }
+  },
 }
 </script>
 
@@ -227,7 +235,7 @@ input[type="checkbox"]{
 
 .center{
   position: absolute;
-  top: 50%;
+  top: 350px;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -236,7 +244,6 @@ input[type="checkbox"]{
 }
 .center .title{
   color: #fff;
-  font-size: 55px;
   font-weight: 600;
 }
 .center .sub_title{

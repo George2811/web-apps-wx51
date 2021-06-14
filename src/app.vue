@@ -22,6 +22,7 @@ export default {
   }
 };
 </script>
+
 <style>
 main{
   margin-top: 70px;

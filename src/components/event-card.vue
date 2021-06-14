@@ -14,15 +14,19 @@
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-currency-usd</v-icon>500
       </v-btn>
-      <v-btn class="" color="error">Ver más</v-btn>
+      <login-dialog text="Ver más"></login-dialog>
     </v-card-actions>
   </v-card>
 
 </template>
 
 <script>
+import LoginDialog from '../components/login-dialog'
 export default {
-  name: "event-card"
+  name: "event-card",
+  components:{
+    LoginDialog
+  }
 }
 </script>
 

@@ -29,18 +29,23 @@
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-account-group</v-icon>500
       </v-btn>
-      <v-btn class="" color="error">Conocer</v-btn>
+      <login-dialog text="Conocer"></login-dialog>
     </v-card-actions>
 
   </v-card>
 </template>
 
 <script>
+import LoginDialog from '../components/login-dialog'
 export default {
   name: "artist-card",
+  components: {
+    LoginDialog
+  },
   props:[
       'logged'
   ]
+
 }
 </script>
 
