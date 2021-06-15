@@ -5,7 +5,10 @@
       <!--
       <router-view></router-view>
       -->
+      <!--
       <artwork-id></artwork-id>
+      -->
+      <event-id></event-id>
     </v-main>
   </v-app>
 </template>
@@ -13,11 +16,11 @@
 <script>
 
 import ToolBar from "./components/tool-bar";
-import ArtworkId from "./components/artwork-id";
+import EventId from "./components/event-id";
 export default {
   name: 'App',
   components: {
-    ArtworkId,
+    EventId,
     ToolBar
   },
   data: () => ({
