@@ -1,12 +1,12 @@
 <template>
     <v-card color="grey lighten-4" flat tile>
       <v-toolbar dense  height="70px">
-        <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4">Perustars</v-toolbar-title>
+        <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4">PeruStars</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="!logged">
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/about">About</v-btn>
-          <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/">Iniciar Sesión</v-btn>
+          <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/login">Iniciar Sesión</v-btn>
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" outlined text-to="/">Registrar</v-btn>
         </div>
         <v-menu left bottom v-if="logged">
