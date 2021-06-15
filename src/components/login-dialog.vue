@@ -1,14 +1,7 @@
 <template>
-  <v-dialog
-      transition="dialog-bottom-transition"
-      max-width="600"
-  >
+  <v-dialog transition="dialog-bottom-transition" max-width="600">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn
-          color="error"
-          v-bind="attrs"
-          v-on="on"
-      >{{text}}</v-btn>
+      <v-btn color="error" v-bind="attrs" v-on="on">{{text}}</v-btn>
     </template>
     <template v-slot:default="dialog">
       <v-card>
