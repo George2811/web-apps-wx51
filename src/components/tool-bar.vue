@@ -7,7 +7,7 @@
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/about">About</v-btn>
           <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/login">Iniciar Sesión</v-btn>
-          <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" outlined text-to="/">Registrar</v-btn>
+          <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" outlined text-to="/" to="/register">Registrar</v-btn>
         </div>
         <v-menu left bottom v-if="logged">
           <template v-slot:activator="{ on, attrs }">

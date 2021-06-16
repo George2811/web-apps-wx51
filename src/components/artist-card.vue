@@ -31,7 +31,6 @@
       </v-btn>
       <login-dialog text="Conocer"></login-dialog>
     </v-card-actions>
-
   </v-card>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
   <v-card height="82vh" class="d-flex flex-row align-center space-evenly elevation-0">
     <div class="d-flex flex-column align-center">
-      <v-card-title class="mb-12 text-h4 font-weight-medium">Iniciar Sesión</v-card-title>
+      <v-card-title class="mb-12 text-h4 font-weight-medium">Regístrate</v-card-title>
       <v-img
-          src="../assets/img/programmer.svg"
-          alt="Iniciar Sesion"
+          src="../assets/img/membership.svg"
+          alt="Registrate"
           max-width="112px"
           max-height="112px"
       >
@@ -12,6 +12,15 @@
     </div>
     <v-form v-model="valid" class="form-container">
       <v-container class="d-flex flex-column">
+        <v-text-field
+            v-model="username"
+            :rules="usernameRules"
+            label="Username"
+            placeholder="Ex.great_artist21"
+            required
+            outlined
+        >
+        </v-text-field>
         <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -35,8 +44,18 @@
             outlined
         ></v-text-field>
       </v-container>
+      <v-radio-group v-model="radioGroup" row>
+        <v-radio class="mr-auto" label="Artista" :value="1" color="red"></v-radio>
+        <v-radio class="mr-0" label="Aficionado" :value="2" color="red"></v-radio>
+      </v-radio-group>
+      <div class="d-flex justify-center">
+        <v-checkbox v-model="checkBox" color="red" label="Términos y condiciones" @click.stop="open" readonly></v-checkbox>
+        <v-dialog v-model="dialog" width="55%" @close="checkBox = false">
+          <terms-and-conditions v-on:close-dialog="close" v-on:created="checkBox=false"/>
+        </v-dialog>
+      </div>
       <v-card-actions class="d-flex justify-center">
-        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" to="/home">Login</v-btn>
+        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" to="/home">Register</v-btn>
       </v-card-actions>
     </v-form>
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -54,13 +73,23 @@
 
 <script>
 
+import TermsAndConditions from "./terms-and-conditions";
 export default {
 
-  name: "login-form",
+  name: "register-form",
+  components: {TermsAndConditions},
   data() {
     return {
+      dialog: false,
+      checkBox: false,
+      radioGroup: 1,
       showPassword: false,
       valid: false,
+      username: '',
+      usernameRules: [
+        value => !!value || 'El username es requerido.',
+        v => v.length >= 8 || 'Mínimo 8 caracteres',
+      ],
       password: '',
       passwordRules: {
         required: value => !!value || 'La contraseña es requerida.',
@@ -74,7 +103,16 @@ export default {
       emailRules: [
         v => !!v || 'El e-mail es requerido',
         v => /.+@.+/.test(v) || 'El e-mail debe ser válido',
-      ]
+      ],
+    }
+  },
+  methods: {
+    open(){
+      this.dialog = true;
+    },
+    close(checkBox){
+      this.dialog = false;
+      this.checkBox = checkBox;
     }
   }
 }
@@ -86,23 +124,26 @@ export default {
   justify-content: space-evenly;
 }
 
-svg{
+svg {
   position: fixed;
   z-index: 150;
   right: -12%;
   top: 40px;
   height: 370px;
 }
-svg:first-of-type{
+
+svg:first-of-type {
   right: 75%;
   top: 10px;
   height: 800px;
 }
 
-.form-container{
+.form-container {
   width: 310px;
 }
 
-
+.prueba {
+  border: 1px solid red;
+}
 
 </style>

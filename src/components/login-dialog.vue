@@ -1,7 +1,7 @@
 <template>
   <v-dialog transition="dialog-bottom-transition" max-width="600">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="error" v-bind="attrs" v-on="on">{{text}}</v-btn>
+      <v-btn color="error" v-bind="attrs" v-on="on">{{ text }}</v-btn>
     </template>
     <template v-slot:default="dialog">
       <v-card>
@@ -16,7 +16,7 @@
           <div class="text-h2 pa-12">
             <img alt="user" src="../assets/img/please-login.svg" width="100%" height="200vh">
             <div class="btns mt-3">
-              <v-btn class="mr-2" color="error" outlined>Regístrate</v-btn>
+              <v-btn class="mr-2" color="error" outlined to="/register">Regístrate</v-btn>
               <v-btn class="ml-2" color="error" to="/login">Iniciar Sesión</v-btn>
             </div>
           </div>
@@ -29,14 +29,14 @@
 <script>
 export default {
   name: "login-dialog",
-  props:[
-      'text'
+  props: [
+    'text'
   ]
 }
 </script>
 
 <style scoped>
-.btns{
+.btns {
   width: 100%;
   display: flex;
   justify-content: space-around;
