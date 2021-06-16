@@ -49,7 +49,7 @@
         <v-radio class="mr-0" label="Aficionado" :value="2" color="red"></v-radio>
       </v-radio-group>
       <div class="d-flex justify-center">
-        <v-checkbox v-model="checkBox" color="red" label="Términos y condiciones" @click.stop="open" readonly></v-checkbox>
+        <v-checkbox v-model="checkBox" color="red" label="Términos y condiciones" @click.stop="open" readonly :rules="checkBoxRules"></v-checkbox>
         <v-dialog v-model="dialog" width="55%" @close="checkBox = false">
           <terms-and-conditions v-on:close-dialog="close" v-on:created="checkBox=false"/>
         </v-dialog>
@@ -104,6 +104,9 @@ export default {
         v => !!v || 'El e-mail es requerido',
         v => /.+@.+/.test(v) || 'El e-mail debe ser válido',
       ],
+      checkBoxRules: [
+          v => !!v || 'Debes aceptar los términos y condiciones'
+      ]
     }
   },
   methods: {
