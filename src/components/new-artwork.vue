@@ -70,7 +70,7 @@ export default {
   methods: {
     save(){
       /* aqui hay que guiarnos segun el service
-      ArtworksApiService.create(this.item)
+      ArtworksApiService.create(this.artwork)
           .then(() => {
             this.navigateToTutorials();
           })

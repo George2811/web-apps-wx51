@@ -5,7 +5,7 @@
      <!--
       <router-view></router-view>
      -->
-      <new-artwork></new-artwork>
+      <new-event></new-event>
     </v-main>
   </v-app>
 </template>
@@ -13,12 +13,12 @@
 <script>
 
 import ToolBar from "./components/tool-bar";
-import NewArtwork from "./components/new-artwork";
+import NewEvent from "./components/new-event";
 
 export default {
   name: 'App',
   components: {
-    NewArtwork,
+    NewEvent,
     ToolBar
   },
   data: () => ({
