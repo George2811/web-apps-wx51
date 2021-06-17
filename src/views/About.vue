@@ -92,7 +92,8 @@
     <!--<a href= "https://facebook.com" target="_blank"><i class="fab fa-facebook-f facebook"></i></a>
         <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram instagram"></i></a>
         <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter twitter"></i></a>-->
-        <terms-and-conditions dialogValue="dialogValue"></terms-and-conditions>
+        <v-btn text color="white" to="/register/terms&conditions">Términos y condiciones</v-btn>
+<!--        <terms-and-conditions dialogValue="dialogValue"></terms-and-conditions>-->
       </div>
     </div>
   </footer>
@@ -102,17 +103,20 @@
 </template>
 
 <script>
-import TermsAndConditions from '../components/terms-and-conditions'
+/*import TermsAndConditions from '../components/terms-and-conditions'*/
 export default {
   name: "about-view",
   components:{
-    TermsAndConditions
+    /*TermsAndConditions*/
   },
   data () {
     return {
       dialogValue: false,
     }
   },
+  created() {
+    this.$emit('isLogged')
+  }
 }
 </script>
 

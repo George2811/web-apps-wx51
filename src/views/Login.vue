@@ -11,6 +11,9 @@ export default {
   name: "Login",
   components:{
     LoginForm
+  },
+  created() {
+    this.$emit('isLogged')
   }
 }
 </script>

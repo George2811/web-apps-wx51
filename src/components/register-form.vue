@@ -122,7 +122,6 @@ export default {
 </script>
 
 <style scoped>
-
 .space-evenly {
   justify-content: space-evenly;
 }

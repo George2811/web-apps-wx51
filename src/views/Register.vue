@@ -11,9 +11,13 @@ export default {
   name: "Register",
   components:{
     RegisterForm,
+  },
+  created() {
+    this.$emit('isLogged')
   }
 }
 </script>
 
 <style>
+
 </style>

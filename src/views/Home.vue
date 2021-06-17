@@ -55,6 +55,9 @@ export default {
     printRoute(){
       console.log(this.roue);
     }
+  },
+  created() {
+    this.$emit('isLogged')
   }
 }
 </script>

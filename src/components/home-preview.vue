@@ -25,7 +25,7 @@
           <v-icon>mdi-palette</v-icon>Nuevos Artistas
         </v-card-title>
         <v-list-item-content class="d-flex flex-row flex-wrap">
-          <artist-card v-for="(artwork,i) in cards" :key="i" class="mb-10 mr-4"></artist-card>
+          <artist-card v-for="(artwork,i) in cards" :key="i" class="mb-10 mr-2"></artist-card>
         </v-list-item-content>
       </v-card>
       <v-divider></v-divider>

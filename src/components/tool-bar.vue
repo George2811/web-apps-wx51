@@ -42,11 +42,14 @@
 </template>
 
 <script>
+
 export default {
   name: "tool-bar",
   props:[
       'logged'
-  ]
+  ],
+  methods:{
+  }
 }
 </script>
 

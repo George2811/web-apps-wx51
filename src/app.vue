@@ -2,9 +2,7 @@
   <v-app>
     <tool-bar :logged="logged"></tool-bar>
     <v-main>
-
-      <router-view></router-view>
-
+      <router-view @isLogged="login"></router-view>
     </v-main>
   </v-app>
 </template>
@@ -22,6 +20,13 @@ export default {
     logged: false
   }),
   created() {
+  },
+  methods:{
+    login(){
+      if (window.location.pathname === '/home')
+        return this.logged = true;
+      return this.logged = false;
+    }
   }
 };
 </script>

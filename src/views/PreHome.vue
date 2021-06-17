@@ -11,6 +11,9 @@ export default {
   name: "PreHome",
   components: {
     HomePreview
+  },
+  created() {
+    this.$emit('isLogged')
   }
 }
 </script>
