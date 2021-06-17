@@ -36,7 +36,7 @@
   </div>
 
   <div class="go-back">
-    <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/">Regresar</v-btn>
+    <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/">Regresar</v-btn>
   </div>
 
 </div>
