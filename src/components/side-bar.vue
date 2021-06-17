@@ -23,7 +23,7 @@
     <br>
     <div class="text-subtitle-1">Tus eventos</div>
     <v-virtual-scroll
-        :items="links"
+        :items="titles"
         :item-height="50"
         height="190"
     >
@@ -33,7 +33,7 @@
             <v-icon>mdi-calendar</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="text-subtitle-2">{{ item[0] }}</v-list-item-title>
+            <v-list-item-title class="text-subtitle-2">{{ item }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -48,16 +48,20 @@ export default {
   name: "side-bar",
   data: () => ({
     links: [
-      ['mdi-inbox-arrow-down', 'Inbox'],
-      ['mdi-send', 'Send'],
-      ['mdi-delete', 'Trash'],
-      ['mdi-alert-octagon', 'Spam'],
+      ['Da Vinci', 'Inbox'],
+      ['Gianmarco', 'Send'],
+      ['Van Goh', 'Trash'],
+      ['Leonardo', 'Spam'],
+      ['Donatello', 'Trash'],
     ],
     titles: [
-      'title1',
-      'title2',
-      'title3',
-      'title4'
+      'event1',
+      'event2',
+      'event3',
+      'event4',
+      'event5',
+      'event6',
+      'event7',
     ]
   })
 }

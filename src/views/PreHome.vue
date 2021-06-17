@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import HomePreview from "@/components/home-preview";
+import HomePreview from "../components/home-preview";
 
 export default {
   name: "PreHome",

@@ -25,7 +25,7 @@
             <v-list-item @click="() => {}">
               <v-icon size="2rem">mdi-account-edit</v-icon>
               <v-list-item-title class="text-body-2">
-                <router-link class="text-body-2" to="/home">Perfil</router-link>
+                <router-link class="text-body-2" to="/hobbyist/edit">Perfil</router-link>
               </v-list-item-title>
             </v-list-item>
             <v-list-item @click="() => {}">
