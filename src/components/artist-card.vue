@@ -29,7 +29,8 @@
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-account-group</v-icon>500
       </v-btn>
-      <login-dialog text="Conocer"></login-dialog>
+      <login-dialog v-if="!logged" text="Conocer"></login-dialog>
+      <v-btn v-else color="error">Conocer</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -44,7 +45,6 @@ export default {
   props:[
       'logged'
   ]
-
 }
 </script>
 

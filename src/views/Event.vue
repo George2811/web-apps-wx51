@@ -8,7 +8,9 @@
 import EventId from "../components/event-id";
 export default {
   name: "Event",
-  components: {EventId}
+  components: {
+    EventId
+  }
 }
 </script>
 

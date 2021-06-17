@@ -16,8 +16,8 @@
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-currency-usd</v-icon>500
       </v-btn>
-      <login-dialog text="Ver más"></login-dialog>
-<!--<v-btn class="text-action-btn" elevation="0" color="white" outlined text-to="/" to="/artwork">Ver Más</v-btn>-->
+      <login-dialog v-if="!logged" text="Ver más"></login-dialog>
+      <v-btn v-else color="error" to="/artwork">Ver más</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -26,6 +26,9 @@
 import LoginDialog from '../components/login-dialog'
 export default {
   name: "artwork-card",
+  props:[
+    'logged'
+  ],
   components:{
     LoginDialog
   }

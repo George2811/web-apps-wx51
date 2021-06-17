@@ -15,7 +15,7 @@
           Obras de Arte
         </v-card-title>
         <v-list-item-content class="d-flex flex-row justify-space-around col-10">
-          <artwork-card v-for="(artwork,i) in itemsArray" :key="i" class="mb-10"></artwork-card>
+          <artwork-card :logged="logged" v-for="(artwork,i) in itemsArray" :key="i" class="mb-10"></artwork-card>
         </v-list-item-content>
         <v-divider></v-divider>
 
@@ -23,7 +23,7 @@
           Eventos
         </v-card-title>
         <v-list-item-content class="d-flex flex-row justify-space-around col-10">
-          <event-card v-for="(event,i) in itemsArray" :key="i" class="mb-10"></event-card>
+          <event-card :logged="logged" v-for="(event,i) in itemsArray" :key="i" class="mb-10"></event-card>
         </v-list-item-content>
       </v-container>
   </div>
