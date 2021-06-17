@@ -48,6 +48,11 @@ const routes = [
     path: '/hobbyist/edit',
     name: 'Hobbyist',
     component: () => import(/* webpackChunkName: "about" */ '../views/Hobbyist.vue')
+  },
+  {
+    path: '/artist-profile',
+    name: 'ArtistProfile',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ArtistProfile.vue')
   }
 
 ]

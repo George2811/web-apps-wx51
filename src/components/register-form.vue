@@ -55,7 +55,7 @@
         </v-dialog>
       </div>
       <v-card-actions class="d-flex justify-center">
-        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" to="/home">Register</v-btn>
+        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" @click="sendUserToNextPage(radioGroup)">Register</v-btn>
       </v-card-actions>
     </v-form>
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -116,6 +116,12 @@ export default {
     close(checkBox){
       this.dialog = false;
       this.checkBox = checkBox;
+    },
+    sendUserToNextPage(radioValue){
+      if (radioValue == 1)
+        this.$router.push({name: 'ArtistProfile'})
+      else
+        this.$router.push({name:'Home'});
     }
   }
 }
