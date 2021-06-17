@@ -76,7 +76,7 @@ export default {
         v => /.+@.+/.test(v) || 'El e-mail debe ser válido',
       ]
     }
-  }
+  },
 }
 </script>
 

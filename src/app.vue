@@ -2,7 +2,7 @@
   <v-app>
     <tool-bar :logged="logged"></tool-bar>
     <v-main>
-
+<!--      <ArtistProfile></ArtistProfile>-->
       <router-view></router-view>
 
     </v-main>
