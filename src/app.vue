@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 import ToolBar from "./components/tool-bar";
 
 export default {
@@ -24,6 +23,8 @@ export default {
   methods:{
     login(){
       if (window.location.pathname === '/home')
+        return this.logged = true;
+      if (window.location.pathname === '/hobbyist/edit')
         return this.logged = true;
       return this.logged = false;
     }
