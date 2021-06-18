@@ -1,5 +1,5 @@
 <template>
-  <v-card class="event-card" max-width="250" elevation="3">
+  <v-card class="event-card" max-width="270" elevation="3">
     <v-img
         src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
         alt="Photo"
