@@ -92,7 +92,7 @@
     <!--<a href= "https://facebook.com" target="_blank"><i class="fab fa-facebook-f facebook"></i></a>
         <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram instagram"></i></a>
         <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter twitter"></i></a>-->
-        <v-btn text color="white" to="/register/terms&conditions">Términos y condiciones</v-btn>
+        <v-btn text color="white" to="/terms&conditions">Términos y condiciones</v-btn>
 <!--        <terms-and-conditions dialogValue="dialogValue"></terms-and-conditions>-->
       </div>
     </div>

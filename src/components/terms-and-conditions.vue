@@ -507,9 +507,8 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn v-if="!actualUrl" color="error" text @click="close(false)" class="mr-3">Cancelar</v-btn>
-      <v-btn v-if="!actualUrl" color="error" @click="close(true)">De acuerdo</v-btn>
-      <v-btn v-if="actualUrl" color="error" to="/about">Volver</v-btn>
+      <v-btn color="error" text @click="close(false)" class="mr-3">Cancelar</v-btn>
+      <v-btn color="error" @click="close(true)">De acuerdo</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -525,11 +524,6 @@ export default {
   methods: {
     close(checkbox){
       this.$emit('close-dialog', checkbox);
-    },
-    actualUrl(){
-      if (window.location.pathname === '/register/terms&conditions')
-        return true;
-      return false;
     }
   },
 

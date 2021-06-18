@@ -30,7 +30,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
   },
   {
-    path: '/register/terms&conditions',
+    path: '/terms&conditions',
     name: 'TermsAndConditions',
     component: () => import(/* webpackChunkName: "about" */ '../components/terms-and-conditions.vue')
   },
