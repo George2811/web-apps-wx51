@@ -3,6 +3,7 @@
       <v-toolbar dense  height="70px" clipped-left>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up" v-if="!logged"></v-app-bar-nav-icon>
         <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4">PeruStars</v-toolbar-title>
+        <v-btn v-if="logged" class="text-toolbar-btn ml-4" plain to="/home">Home</v-btn>
         <v-spacer></v-spacer>
         <div v-if="!logged" class="hidden-sm-and-down">
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
@@ -34,6 +35,7 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
+        <span v-if="logged">George</span>
         <v-menu left bottom v-if="logged">
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on" class="mr-2">
@@ -41,13 +43,6 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="() => {}">
-              <v-list-item-title class="text-body-2">
-                <router-link class="text-body-2" to="/home">
-                  <v-icon size="2rem">mdi-home-circle</v-icon>Home
-                </router-link>
-              </v-list-item-title>
-            </v-list-item>
             <v-list-item @click="() => {}">
               <v-list-item-title class="text-body-2">
                 <router-link class="text-body-2" to="/hobbyist/edit">
