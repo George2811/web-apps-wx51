@@ -16,16 +16,17 @@ export default {
     ToolBar
   },
   data: () => ({
-    logged: false
+    logged: false,
+    viewsAdmitted:['/home','/hobbyist/edit','/artist-profile']
   }),
   created() {
   },
   methods:{
     login(){
-      if (window.location.pathname === '/home')
-        return this.logged = true;
-      if (window.location.pathname === '/hobbyist/edit')
-        return this.logged = true;
+      for (const view of this.viewsAdmitted){
+        if (window.location.pathname === view)
+          return this.logged = true;
+      }
       return this.logged = false;
     }
   }

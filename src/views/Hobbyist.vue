@@ -10,7 +10,7 @@
       <div class="flex-column ml-10 mr-5 image-profile">
         <v-card-title class="d-block text-center white--text text-h5 font-weight-bold">Hobbyist Name</v-card-title>
         <v-img
-            src="../assets/img/amateur.jpg"
+            src="https://picsum.photos/id/177/800"
             alt="artist image"
             width="200" height="200"
             class="rounded-circle"
@@ -19,7 +19,7 @@
       </div>
     </v-card>
 
-    <v-card class="mx-auto px-16 py-10" width="50%">
+    <v-card class="py-10 mx-auto px-5 px-md-16  col-9 col-sm-8 col-md-5">
       <v-form
           ref="form"
           v-model="valid"

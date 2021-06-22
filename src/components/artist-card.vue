@@ -31,7 +31,7 @@
         500
       </v-btn>
       <login-dialog v-if="!logged" text="Conocer"></login-dialog>
-      <v-btn v-else color="error">Conocer</v-btn>
+      <v-btn v-else color="error" to="/artist-profile">Conocer</v-btn>
     </v-card-actions>
   </v-card>
 </template>

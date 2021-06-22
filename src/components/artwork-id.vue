@@ -40,10 +40,19 @@
           <v-icon color="red">mdi-share-variant</v-icon>
           Compartir
         </v-btn>
+        <v-btn
+            class="mx-4"
+            fab
+            small
+            color="white"
+            @click="addFavorite()"
+        >
+          <v-icon :color="colorHearth">
+            mdi-heart
+          </v-icon>
+        </v-btn>
       </div>
       <br>
-
-
     </div>
 
     <div class="go-back my-10">
@@ -56,10 +65,8 @@
 <script>
 export default {
   name: "artwork-id",
-
   data() {
     return {
-
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
@@ -73,7 +80,18 @@ export default {
         {
           src: 'https://picsum.photos/id/1050/6000/4000.jpg',
         },
-      ]
+      ],
+      isFavorite: false
+    }
+  },
+  computed:{
+    colorHearth: function (){
+      return this.isFavorite? 'error': 'dark';
+    }
+  },
+  methods:{
+    addFavorite(){
+      this.isFavorite = !this.isFavorite;
     }
   }
 }
@@ -88,11 +106,12 @@ export default {
 .left-content {
   width: 80%;
 }
-
-.right-content {
-
+.red-hearth{
+  color: red;
 }
-
+.dark-hearth{
+  color: black;
+}
 .btn-color {
   color: white;
   background: linear-gradient(175deg, #ff9143 0, #ff824a 12.5%, #ff734e 25%, #ff6352 37.5%, #f25353 50%, #df4453 62.5%, #cd3753 75%, #bd2c54 87.5%, #ae2455 100%);

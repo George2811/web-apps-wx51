@@ -7,11 +7,11 @@
                 style="stroke: none; fill: #fff;"></path>
         </svg>
       </div>
-      <v-card class="d-flex flex-row mx-10 mt-10 top-content" color="transparent" elevation="0">
+      <v-card class="d-flex flex-md-row mx-10 mt-10 top-content" color="transparent" elevation="0">
         <div class="flex-column ml-10 mr-5 image-profile">
           <v-card-title class="d-block text-center white--text text-h5 font-weight-bold">Artist Name</v-card-title>
           <v-img
-              src="../assets/img/amateur.jpg"
+              src="https://picsum.photos/id/1011/800"
               alt="artist image"
               width="200" height="200"
               class="rounded-circle"
@@ -20,7 +20,7 @@
         </div>
         <div class="profile-data d-flex flex-row justify-space-around mr-10">
           <div class="flex-column profile-contact">
-            <p>xxx seguidores</p>
+            <p><v-icon color="white">mdi-account-group</v-icon> 999 seguidores</p>
             <p>Correo/num contacto</p>
           </div>
           <div class="flex-row justify-space-around px-12">
@@ -47,9 +47,9 @@
     </section>
 
     <section>
-      <v-card elevation="0" class="ml-15 mb-16">
+      <v-card elevation="0" class=" ml-4 ml-md-15 mb-16">
         <v-card-title class="text-h5 font-weight-medium">¿Quién soy?</v-card-title>
-        <p class="description-p">"Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
+        <p class="description-p col-12">"Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
           descripción Aquí va
           texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
           descripción."</p>
@@ -57,14 +57,14 @@
     </section>
 
     <section class="artworks-section">
-      <v-card class="mx-10 mt-5 mb-13" elevation="0" color="transparent">
+      <v-card class="mx-1 mx-md-6 mt-5 mb-13" elevation="0" color="transparent">
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
         <div class="d-flex flex-row align-center">
           <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previusPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text">mdi-chevron-left</v-icon>
           </v-btn>
-          <v-list-item-content class="d-flex flex-row justify-space-between justify-center px-10">
+          <v-list-item-content class="d-flex flex-column flex-md-row justify-space-between px-0 px-md-10">
             <artwork-card v-for="(artwork, i) in showingArtworks" :key="i"></artwork-card>
           </v-list-item-content>
           <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="nextPage"
@@ -86,10 +86,10 @@
     </section>
 
     <section>
-      <v-card class="mx-10 mt-5 mb-15" elevation="0" color="transparent">
+      <v-card class="mx-0 mx-sm-9 mx-md-10 mt-5 mb-15" elevation="0" color="transparent" >
         <v-card-title class="text-h5 font-weight-medium">Futuros eventos</v-card-title>
         <v-carousel
-            height="400"
+            height="900"
             hide-delimiter-background
             show-arrows-on-hover
             light
