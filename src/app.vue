@@ -16,17 +16,18 @@ export default {
     ToolBar
   },
   data: () => ({
-    logged: false
+    logged: false,
+    freeViews:['/','/about','/login', '/register', '/terms&conditions']
   }),
   created() {
   },
   methods:{
     login(){
-      if (window.location.pathname === '/home')
-        return this.logged = true;
-      if (window.location.pathname === '/hobbyist/edit')
-        return this.logged = true;
-      return this.logged = false;
+      for (const view of this.freeViews){
+        if (window.location.pathname === view)
+          return this.logged = false;
+      }
+      return this.logged = true;
     }
   }
 };

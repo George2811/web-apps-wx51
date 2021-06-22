@@ -8,7 +8,7 @@
           :src="item.src"
       >
         <v-row class="fill-height" align="center" justify="center">
-          <h1 class="title white--text">OBRA DE ARTE</h1>
+          <h1 class="title white--text">{{ artwork.artTitle }}</h1>
         </v-row>
       </v-carousel-item>
     </v-carousel>
@@ -20,11 +20,9 @@
         <h2 class="Description text-center text-sm-start">Descripción</h2>
         <br>
         <p class="mx-auto mx-sm-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec leo ornare, cursus arcu ut, faucibus odio.
-          Donec non sem gravida, pharetra nisl in, volutpat metus. Aenean eget elementum justo, eu malesuada est. Nulla
-          condimentum eleifend lectus. Mauris ut dapibus magna, nec laoreet lorem. Nunc iaculis sapien a sollicitudin
-          molestie. Phasellus at aliquet nulla. Nam rhoncus, mi ut varius euismod, velit augue tincidunt dolor,
-          venenatis malesuada sem lacus quis mi.
+          {{
+            artwork.artDescription
+          }}
           <br>
         </p>
       </div>
@@ -34,32 +32,76 @@
         <br>
         <p>
           <v-icon color="red">mdi-cash-multiple</v-icon>
-          S/. 100.00
+          S/. {{ artwork.artCost }}
         </p>
         <v-btn>
           <v-icon color="red">mdi-share-variant</v-icon>
           Compartir
         </v-btn>
+        <v-btn
+            class="mx-4"
+            fab
+            small
+            color="white"
+            @click="addFavorite()"
+        >
+          <v-icon :color="colorHearth">
+            mdi-heart
+          </v-icon>
+        </v-btn>
+        <v-btn
+            fab
+            small
+            class="mt-3"
+            color="error"
+            @click="dialog = !dialog"
+        >
+          <v-icon>mdi-information-outline</v-icon>
+        </v-btn>
       </div>
       <br>
-
-
     </div>
 
     <div class="go-back my-10">
       <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/home">Regresar</v-btn>
     </div>
 
+    <v-dialog
+        v-model="dialog"
+        max-width="500px"
+    >
+      <v-card>
+        <v-card-text>
+          <v-card-title class="body-1">Más información</v-card-title>
+          <v-icon>mdi-link-variant</v-icon>
+          <a :href="`${this.artwork.linkInfo}`" target="_blank">{{artwork.linkInfo}}</a>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              text
+              color="error"
+              @click="dialog = false"
+          >
+            Cerrar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
 <script>
+import ArtworksApiService from '../services/artworks-api.service'
 export default {
   name: "artwork-id",
-
   data() {
     return {
-
+      dialog: false,
+      artistId : this.$route.params.artistId,
+      artworkId : this.$route.params.artworkId,
+      artwork : Object,
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
@@ -71,9 +113,30 @@ export default {
           src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
         },
         {
-          src: 'https://picsum.photos/id/1050/6000/4000.jpg',
+          src: 'https://picsum.photos/3900/3120',
         },
-      ]
+      ],
+      isFavorite: false
+    }
+  },
+  created() {
+    this.retrieveArtwork();
+  },
+  computed:{
+    colorHearth: function (){
+      return this.isFavorite? 'error': 'dark';
+    }
+  },
+  methods:{
+    addFavorite(){
+      this.isFavorite = !this.isFavorite;
+    },
+    retrieveArtwork(){
+      ArtworksApiService.get(this.artistId, this.artworkId)
+      .then(response => {
+        this.artwork = response.data;
+        console.log(this.artwork)
+      }).catch(e => { console.log(e); })
     }
   }
 }
@@ -88,11 +151,12 @@ export default {
 .left-content {
   width: 80%;
 }
-
-.right-content {
-
+.red-hearth{
+  color: red;
 }
-
+.dark-hearth{
+  color: black;
+}
 .btn-color {
   color: white;
   background: linear-gradient(175deg, #ff9143 0, #ff824a 12.5%, #ff734e 25%, #ff6352 37.5%, #f25353 50%, #df4453 62.5%, #cd3753 75%, #bd2c54 87.5%, #ae2455 100%);

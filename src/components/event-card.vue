@@ -1,13 +1,15 @@
 <template>
-  <v-card class="event-card" max-width="270" elevation="3">
+  <v-card class="event-card d-flex flex-column justify-space-between" max-width="270" height="380" elevation="3">
     <v-img
         src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
         alt="Photo"
+        max-height="200"
     ></v-img>
     <div class="mx-3 my-2">
-      <v-card-title class="text-body-1 px-0 font-weight-bold pb-2">Name Event</v-card-title>
+      <v-card-title class="text-body-1 px-0 font-weight-bold pb-2">{{ event.eventTitle }}</v-card-title>
       <v-btn class="text-action-btn" elevation="0" color="white">
-        <v-icon>mdi-calendar</v-icon>15/06/21 - 16/06/21
+        <v-icon>mdi-calendar</v-icon>
+        {{ parseToDate(event.dateStart) }} - {{ parseToDate(event.dateEnd) }}
       </v-btn>
     </div>
     <v-card-actions class="d-flex justify-space-between mx-2 text-action-btn" >
@@ -15,7 +17,7 @@
         <v-icon>mdi-currency-usd</v-icon>500
       </v-btn>
       <login-dialog v-if="!logged" text="Ver más"></login-dialog>
-      <v-btn v-else color="error" to="/event">Ver más</v-btn>
+      <v-btn v-else color="error" :to="goToEvent">Ver más</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -26,10 +28,19 @@ import LoginDialog from '../components/login-dialog'
 export default {
   name: "event-card",
   props:[
-    'logged'
+    'logged',
+      'event'
   ],
+  computed:{
+    goToEvent(){ return `artist/${this.event.artistId}/event/${this.event.eventId}`; }
+  },
   components:{
     LoginDialog
+  },
+  methods:{
+    parseToDate(date){
+      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+    }
   }
 }
 </script>

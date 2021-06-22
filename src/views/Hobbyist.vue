@@ -10,7 +10,7 @@
       <div class="flex-column ml-10 mr-5 image-profile">
         <v-card-title class="d-block text-center white--text text-h5 font-weight-bold">Hobbyist Name</v-card-title>
         <v-img
-            src="../assets/img/amateur.jpg"
+            src="https://picsum.photos/id/177/800"
             alt="artist image"
             width="200" height="200"
             class="rounded-circle"
@@ -19,7 +19,7 @@
       </div>
     </v-card>
 
-    <v-card class="mx-auto px-16 py-10" width="50%">
+    <v-card class="py-10 mx-auto px-5 px-md-16  col-9 col-sm-8 col-md-5">
       <v-form
           ref="form"
           v-model="valid"
@@ -61,8 +61,8 @@
     </v-card>
 
     <v-card elevation="0" class="mx-auto mt-15">
-      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 50%">
-        <specialty-card v-for="(specialties,i) in cards" :key="i" class="mb-10 mx-16 mx-sm-0"></specialty-card>
+      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 70%">
+        <specialty-card v-for="(specialty,i) in specialties" :key="i" :specialtyName="specialty.name" class="mb-10 mx-16 mx-sm-0"></specialty-card>
       </v-list-item-content>
     </v-card>
     <div class="save-btn my-15 mx-auto" style="width: fit-content">
@@ -77,6 +77,9 @@
 </template>
 
 <script>
+// Services
+import SpecialtiesApiService from '../services/specialties-api.service'
+//Components
 import SpecialtyCard from '../components/specialty-card'
 
 export default {
@@ -86,7 +89,7 @@ export default {
   },
   data() {
     return {
-      cards: [1, 2, 3, 4, 5, 6],
+      specialties: [],
       username: 'Miguel Angel',
       usernameRules: [
         value => !!value || 'El username es requerido.',
@@ -111,7 +114,17 @@ export default {
     }
   },
   created() {
-    this.$emit('isLogged')
+    this.$emit('isLogged');
+    this.retrieveSpecialties();
+  },
+  methods:{
+    retrieveSpecialties() {
+      SpecialtiesApiService.getAll()
+          .then(response => {
+            this.specialties = response.data;
+            console.log(this.specialties)
+          }).catch(e => { console.log(e); })
+    }
   }
 }
 </script>
