@@ -1,12 +1,12 @@
 <template>
-  <v-card class="artist-card" max-width="270" elevation="3">
+  <v-card class="artist-card d-flex flex-column " max-width="270" height="270" elevation="3">
     <v-card-title class="dark--text flex flex-row align-center">
       <v-avatar size="50">
         <img alt="user" src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg">
       </v-avatar>
       <div class="card-name ml-2">
-        <h2 class="text-subtitle-1">Leonardo DaVinci</h2>
-        <h3 class="text-subtitle-2">DaVinci</h3>
+        <h2 class="text-subtitle-1">{{artist.firstname}} {{artist.lastname}}</h2>
+        <h3 class="text-subtitle-2">{{ artist.brandName }}</h3>
       </div>
     </v-card-title>
 
@@ -21,9 +21,9 @@
       </v-btn>
     </div>
     <p class="text-caption text-justify mx-5" v-if="!logged">
-      "Lorem ipsum dolor sit amet, consectetur
-      adipisicing elit adipisicing elit elit.
-      Dignissimos dolorem minima minus siu."
+      "{{
+        artist.phrase
+      }}"
     </p>
     <v-card-actions class="d-flex justify-space-between mx-2 text-action-btn">
       <v-btn class="text-action-btn" elevation="0" color="white">
@@ -45,7 +45,8 @@ export default {
     LoginDialog
   },
   props: [
-    'logged'
+    'logged',
+      'artist'
   ]
 }
 </script>
