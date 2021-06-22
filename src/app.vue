@@ -17,7 +17,7 @@ export default {
   },
   data: () => ({
     logged: false,
-    viewsAdmitted:['/home','/hobbyist/edit','/artist-profile']
+    viewsAdmitted:['/home','/hobbyist/edit','/artist-profile','/artist/1/artwork/2']
   }),
   created() {
   },

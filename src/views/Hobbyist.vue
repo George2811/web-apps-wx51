@@ -61,8 +61,8 @@
     </v-card>
 
     <v-card elevation="0" class="mx-auto mt-15">
-      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 50%">
-        <specialty-card v-for="(specialties,i) in cards" :key="i" class="mb-10 mx-16 mx-sm-0"></specialty-card>
+      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 70%">
+        <specialty-card v-for="(specialty,i) in specialties" :key="i" :specialtyName="specialty.name" class="mb-10 mx-16 mx-sm-0"></specialty-card>
       </v-list-item-content>
     </v-card>
     <div class="save-btn my-15 mx-auto" style="width: fit-content">
@@ -77,6 +77,9 @@
 </template>
 
 <script>
+// Services
+import SpecialtiesApiService from '../services/specialties-api.service'
+//Components
 import SpecialtyCard from '../components/specialty-card'
 
 export default {
@@ -86,7 +89,7 @@ export default {
   },
   data() {
     return {
-      cards: [1, 2, 3, 4, 5, 6],
+      specialties: [],
       username: 'Miguel Angel',
       usernameRules: [
         value => !!value || 'El username es requerido.',
@@ -111,7 +114,17 @@ export default {
     }
   },
   created() {
-    this.$emit('isLogged')
+    this.$emit('isLogged');
+    this.retrieveSpecialties();
+  },
+  methods:{
+    retrieveSpecialties() {
+      SpecialtiesApiService.getAll()
+          .then(response => {
+            this.specialties = response.data;
+            console.log(this.specialties)
+          }).catch(e => { console.log(e); })
+    }
   }
 }
 </script>

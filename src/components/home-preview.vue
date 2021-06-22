@@ -103,24 +103,23 @@ export default {
     retrieveArtists(){
       ArtistApiService.getAll()
       .then(response => {
-        this.artists = response.data;
+        this.artists = response.data.slice(0,8);
         this.displayArtists = response.data.map(this.getDisplayArtists);
-
+        // console.log(this.artists)
       }).catch(e => { console.log(e); })
     },
     retrieveArtworks(){
       ArtworksApiService.getAll(1)
       .then(response => {
         this.artworks =response.data;
-
-      }).catch(e => {console.log(e); })
+      }).catch(e => { console.log(e); })
     },
     retrieveEvents(){
       EventsApiService.getAllByArtistId(1)
           .then(response => {
             this.events =response.data;
-            console.log(response.data)
-          }).catch(e => {console.log(e); })
+            // console.log(response.data)
+          }).catch(e => { console.log(e); })
     }
   }
 }

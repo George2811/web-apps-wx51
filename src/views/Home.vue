@@ -7,7 +7,7 @@
         Artistas
       </v-card-title>
       <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-        <artist-card :logged="logged" v-for="(artist,i) in itemsArray" :key="i" class="mb-10"></artist-card>
+        <artist-card :logged="logged" v-for="(artist,i) in artists" :key="i" :artist="artist" class="mb-10"></artist-card>
       </v-list-item-content>
       <v-divider></v-divider>
 
@@ -15,7 +15,7 @@
         Obras de Arte
       </v-card-title>
       <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-        <artwork-card :logged="logged" v-for="(artwork,i) in itemsArray" :key="i" class="mb-10"></artwork-card>
+        <artwork-card :logged="logged" v-for="(artwork,i) in artworks" :key="i" :artwork="artwork" class="mb-10"></artwork-card>
       </v-list-item-content>
       <v-divider></v-divider>
 
@@ -23,13 +23,20 @@
         Eventos
       </v-card-title>
       <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-        <event-card :logged="logged" v-for="(event,i) in itemsArray" :key="i" class="mb-10"></event-card>
+        <event-card :logged="logged" v-for="(event,i) in events" :key="i" :event="event" class="mb-10"></event-card>
       </v-list-item-content>
     </v-container>
   </div>
 </template>
 
 <script>
+
+//Services
+import ArtistApiService from '../services/artists-api.service'
+import ArtworksApiService from '../services/artworks-api.service'
+import EventsApiService from '../services/events-api.service'
+
+//Components
 import SideBar from '../components/side-bar'
 import ArtistCard from '../components/artist-card'
 import ArtworkCard from '../components/artwork-card'
@@ -45,6 +52,9 @@ export default {
 
   },
   data: () => ({
+    artists: [],
+    artworks: [],
+    events: [],
     cards: ['Today', 'Yesterday'],
     drawer: null,
     itemsArray: [1, 2, 3, 4, 5, 6],
@@ -54,10 +64,34 @@ export default {
   methods: {
     printRoute() {
       console.log(this.roue);
+    },
+    retrieveArtists(){
+      ArtistApiService.getAll()
+          .then(response => {
+            this.artists = response.data.slice(0,6);
+            // console.log(this.artists)
+          }).catch(e => { console.log(e); })
+    },
+    retrieveArtworks(){
+      ArtworksApiService.getAll(1)
+          .then(response => {
+            this.artworks =response.data;
+          }).catch(e => { console.log(e); })
+    },
+    retrieveEvents(){
+      EventsApiService.getAllByArtistId(1)
+          .then(response => {
+            this.events =response.data;
+            // console.log(response.data)
+          }).catch(e => { console.log(e); })
     }
   },
   created() {
     this.$emit('isLogged')
+    this.retrieveArtworks();
+    this.retrieveArtists();
+    this.retrieveEvents();
+
   }
 }
 </script>

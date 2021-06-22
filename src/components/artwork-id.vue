@@ -8,7 +8,7 @@
           :src="item.src"
       >
         <v-row class="fill-height" align="center" justify="center">
-          <h1 class="title white--text">OBRA DE ARTE</h1>
+          <h1 class="title white--text">{{ artwork.artTitle }}</h1>
         </v-row>
       </v-carousel-item>
     </v-carousel>
@@ -20,11 +20,9 @@
         <h2 class="Description text-center text-sm-start">Descripción</h2>
         <br>
         <p class="mx-auto mx-sm-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec leo ornare, cursus arcu ut, faucibus odio.
-          Donec non sem gravida, pharetra nisl in, volutpat metus. Aenean eget elementum justo, eu malesuada est. Nulla
-          condimentum eleifend lectus. Mauris ut dapibus magna, nec laoreet lorem. Nunc iaculis sapien a sollicitudin
-          molestie. Phasellus at aliquet nulla. Nam rhoncus, mi ut varius euismod, velit augue tincidunt dolor,
-          venenatis malesuada sem lacus quis mi.
+          {{
+            artwork.artDescription
+          }}
           <br>
         </p>
       </div>
@@ -34,7 +32,7 @@
         <br>
         <p>
           <v-icon color="red">mdi-cash-multiple</v-icon>
-          S/. 100.00
+          S/. {{ artwork.artCost }}
         </p>
         <v-btn>
           <v-icon color="red">mdi-share-variant</v-icon>
@@ -63,10 +61,14 @@
 </template>
 
 <script>
+import ArtworksApiService from '../services/artworks-api.service'
 export default {
   name: "artwork-id",
   data() {
     return {
+      artistId : this.$route.params.artistId,
+      artworkId : this.$route.params.artworkId,
+      artwork : Object,
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
@@ -84,6 +86,9 @@ export default {
       isFavorite: false
     }
   },
+  created() {
+    this.retrieveArtwork();
+  },
   computed:{
     colorHearth: function (){
       return this.isFavorite? 'error': 'dark';
@@ -92,6 +97,13 @@ export default {
   methods:{
     addFavorite(){
       this.isFavorite = !this.isFavorite;
+    },
+    retrieveArtwork(){
+      ArtworksApiService.get(this.artistId, this.artworkId)
+      .then(response => {
+        this.artwork = response.data;
+        console.log(this.artwork)
+      }).catch(e => { console.log(e); })
     }
   }
 }

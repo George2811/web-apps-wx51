@@ -1,5 +1,5 @@
 <template>
-  <v-card class="artist-card d-flex flex-column " max-width="270" height="270" elevation="3">
+  <v-card class="artist-card d-flex flex-column" max-width="270" max-height="270" elevation="3">
     <v-card-title class="dark--text flex flex-row align-center">
       <v-avatar size="50">
         <img alt="user" src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg">
@@ -13,7 +13,7 @@
     <div class="my-2 text-center" v-if="!logged">
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-brush</v-icon>
-        Pintor
+        {{ assignSpecialty() }}
       </v-btn>
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-format-paint</v-icon>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import SpecialtiesApiService from '../services/specialties-api.service'
 import LoginDialog from '../components/login-dialog'
 
 export default {
@@ -46,16 +47,41 @@ export default {
   },
   props: [
     'logged',
-      'artist'
-  ]
+    'artist'
+  ],
+  data(){
+    return{
+      specialties: []
+    }
+  },
+  created() {
+    this.retrieveSpecialties()
+  },
+  methods: {
+    retrieveSpecialties(){
+      SpecialtiesApiService.getAll()
+          .then(response => {
+            this.specialties = response.data;
+            // console.log(response.data);
+          }).catch(e => { console.log(e); })
+    },
+    assignSpecialty(){
+      for (let specialty of this.specialties){
+        if (this.artist.id === specialty.id)
+          return specialty.name;
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
-
 .text-action-btn * {
   text-transform: none;
   letter-spacing: 0.02em;
   font-weight: 500;
+}
+.text-caption{
+  height: 60px;
 }
 </style>
