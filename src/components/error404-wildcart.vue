@@ -9,6 +9,7 @@
     <v-card-subtitle>Lo sentimos :c ,el contenido que estas buscando no existe, te recomendamos regresar al menu </v-card-subtitle>
   <v-card-actions>
     <v-btn class="btn-color" @click="$router.go(-1)" > Regresar</v-btn>
+    <v-btn class="btn-color" to="/"  > Menu Principal</v-btn>
   </v-card-actions>
   </v-card>
   </div>
