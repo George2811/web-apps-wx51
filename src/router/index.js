@@ -53,6 +53,11 @@ const routes = [
     path: '/artist-profile',
     name: 'ArtistProfile',
     component: () => import(/* webpackChunkName: "about" */ '../views/ArtistProfile.vue')
+  },
+  {
+    path: '*',
+    name:'Error404',
+    component:()=>import(/* webpackChunkName: "about" */'../components/error404-wildcart.vue')
   }
 
 ]
