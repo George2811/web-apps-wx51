@@ -73,7 +73,7 @@
       <div class="img_registration"></div>
       <div class="section_registercontent">
         <p>Únete ahora y obtén la oportunidad de recibir beneficios únicos.</p>
-        <input type="button" value="Regístrate Gratis" >
+        <v-btn class="btn-register text-body-1" to="/register">Regístrate</v-btn>
       </div>
     </div>
   </div>
@@ -416,7 +416,7 @@ input[type="checkbox"]{
   align-items: center;
   justify-content:center;
 }
-.section_registercontent input{
+.section_registercontent .btn-register{
   border: none;
   margin-top: 50px;
   background: #ce1212;
@@ -428,7 +428,7 @@ input[type="checkbox"]{
   transition: all 0.3s ease;
   outline: none;
 }
-.section_registercontent input:hover{
+.section_registercontent .btn-register:hover{
   background: white;
   color: #ce1212;
   box-shadow: inset 0 0 0 2px #ce1212;

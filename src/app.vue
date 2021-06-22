@@ -17,17 +17,17 @@ export default {
   },
   data: () => ({
     logged: false,
-    viewsAdmitted:['/home','/hobbyist/edit','/artist-profile','/artist/1/artwork/2']
+    freeViews:['/','/about','/login', '/register', '/terms&conditions']
   }),
   created() {
   },
   methods:{
     login(){
-      for (const view of this.viewsAdmitted){
+      for (const view of this.freeViews){
         if (window.location.pathname === view)
-          return this.logged = true;
+          return this.logged = false;
       }
-      return this.logged = false;
+      return this.logged = true;
     }
   }
 };

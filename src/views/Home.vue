@@ -76,6 +76,7 @@ export default {
       ArtworksApiService.getAll(1)
           .then(response => {
             this.artworks =response.data;
+            console.log(this.artworks)
           }).catch(e => { console.log(e); })
     },
     retrieveEvents(){

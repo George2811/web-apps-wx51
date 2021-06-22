@@ -10,7 +10,7 @@
           :src="item.src"
       >
         <v-row class="fill-height" align="center" justify="center">
-          <h1 class="title white--text">EVENTO</h1>
+          <h1 class="title white--text">{{ event.eventTitle }}</h1>
         </v-row>
       </v-carousel-item>
     </v-carousel>
@@ -29,11 +29,9 @@
         <h2 class="Description text-center text-sm-start">Descripción</h2>
         <br>
         <p class="mx-auto mx-sm-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec leo ornare, cursus arcu ut, faucibus odio.
-          Donec non sem gravida, pharetra nisl in, volutpat metus. Aenean eget elementum justo, eu malesuada est. Nulla
-          condimentum eleifend lectus. Mauris ut dapibus magna, nec laoreet lorem. Nunc iaculis sapien a sollicitudin
-          molestie. Phasellus at aliquet nulla. Nam rhoncus, mi ut varius euismod, velit augue tincidunt dolor,
-          venenatis malesuada sem lacus quis mi.
+          {{
+            event.eventDescription
+          }}
           <br>
         </p>
       </div>
@@ -41,10 +39,8 @@
       <div class="right-content">
         <h2 class="aditional-info">Datos adicionales</h2>
         <br>
-        <p>
-          <v-icon color="red">mdi-calendar-month-outline</v-icon>
-          99/99/99
-        </p>
+        <p style="width: 190px">
+          <v-icon color="red">mdi-calendar-month-outline</v-icon>{{parseToDate(event.dateStart)}} - {{parseToDate(event.dateEnd)}}</p>
         <p>
           <v-icon color="red">mdi-cash-multiple</v-icon>
           S/. 100.00
@@ -66,17 +62,20 @@
 </template>
 
 <script>
+import EventsApiService from '../services/events-api.service'
 export default {
   name: "event-id",
   data() {
     return {
-
+      artistId: this.$route.params.artistId,
+      eventId: this.$route.params.eventId,
+      event: Object,
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
         },
         {
-          src: 'https://picsum.photos/id/1049/3900/3120.jpg',
+          src: 'https://picsum.photos/3900/3120',
         },
         {
           src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
@@ -85,6 +84,21 @@ export default {
           src: 'https://picsum.photos/id/1050/6000/4000.jpg',
         },
       ]
+    }
+  },
+  created() {
+    this.retrieveEvent();
+  },
+  methods:{
+    parseToDate(date){
+      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`;
+    },
+    retrieveEvent() {
+      EventsApiService.get(this.artistId,this.eventId)
+      .then(response => {
+        this.event = response.data;
+        console.log(this.event);
+      }).catch(e => { console.log(e); })
     }
   }
 }

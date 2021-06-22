@@ -17,7 +17,7 @@
         <v-icon>mdi-currency-usd</v-icon>500
       </v-btn>
       <login-dialog v-if="!logged" text="Ver más"></login-dialog>
-      <v-btn v-else color="error" to="/event">Ver más</v-btn>
+      <v-btn v-else color="error" :to="goToEvent">Ver más</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -31,6 +31,9 @@ export default {
     'logged',
       'event'
   ],
+  computed:{
+    goToEvent(){ return `artist/${this.event.artistId}/event/${this.event.eventId}`; }
+  },
   components:{
     LoginDialog
   },

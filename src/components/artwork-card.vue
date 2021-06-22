@@ -19,7 +19,7 @@
         {{ artwork.artCost }}
       </v-btn>
       <login-dialog v-if="!logged" text="Ver más"></login-dialog>
-      <v-btn v-else color="error" to="/artwork">Ver más</v-btn>
+      <v-btn v-else color="error" :to="goToArtwork">Ver más</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -30,8 +30,11 @@ export default {
   name: "artwork-card",
   props:[
     'logged',
-      'artwork'
+    'artwork'
   ],
+  computed:{
+    goToArtwork(){ return `artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; }
+  },
   components:{
     LoginDialog
   }

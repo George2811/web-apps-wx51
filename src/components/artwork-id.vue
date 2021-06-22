@@ -49,6 +49,15 @@
             mdi-heart
           </v-icon>
         </v-btn>
+        <v-btn
+            fab
+            small
+            class="mt-3"
+            color="error"
+            @click="dialog = !dialog"
+        >
+          <v-icon>mdi-information-outline</v-icon>
+        </v-btn>
       </div>
       <br>
     </div>
@@ -56,6 +65,29 @@
     <div class="go-back my-10">
       <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/home">Regresar</v-btn>
     </div>
+
+    <v-dialog
+        v-model="dialog"
+        max-width="500px"
+    >
+      <v-card>
+        <v-card-text>
+          <v-card-title class="body-1">Más información</v-card-title>
+          <v-icon>mdi-link-variant</v-icon>
+          <a :href="`${this.artwork.linkInfo}`" target="_blank">{{artwork.linkInfo}}</a>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              text
+              color="error"
+              @click="dialog = false"
+          >
+            Cerrar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -66,6 +98,7 @@ export default {
   name: "artwork-id",
   data() {
     return {
+      dialog: false,
       artistId : this.$route.params.artistId,
       artworkId : this.$route.params.artworkId,
       artwork : Object,
@@ -80,7 +113,7 @@ export default {
           src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
         },
         {
-          src: 'https://picsum.photos/id/1050/6000/4000.jpg',
+          src: 'https://picsum.photos/3900/3120',
         },
       ],
       isFavorite: false

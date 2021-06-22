@@ -17,7 +17,7 @@
       </v-btn>
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-format-paint</v-icon>
-        40
+        {{getRandomNumber(50)}}
       </v-btn>
     </div>
     <p class="text-caption text-justify mx-5" v-if="!logged">
@@ -28,7 +28,7 @@
     <v-card-actions class="d-flex justify-space-between mx-2 text-action-btn">
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-account-group</v-icon>
-        500
+        {{getRandomNumber(500)}}
       </v-btn>
       <login-dialog v-if="!logged" text="Conocer"></login-dialog>
       <v-btn v-else color="error" to="/artist-profile">Conocer</v-btn>
@@ -58,16 +58,18 @@ export default {
     this.retrieveSpecialties()
   },
   methods: {
+    getRandomNumber(num){
+      return Math.floor(Math.random() * num);
+    },
     retrieveSpecialties(){
       SpecialtiesApiService.getAll()
           .then(response => {
             this.specialties = response.data;
-            // console.log(response.data);
           }).catch(e => { console.log(e); })
     },
     assignSpecialty(){
       for (let specialty of this.specialties){
-        if (this.artist.id === specialty.id)
+        if (this.artist.specialtyId === specialty.id)
           return specialty.name;
       }
     }
