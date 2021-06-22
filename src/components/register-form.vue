@@ -1,7 +1,7 @@
 <template>
-  <v-card height="82vh" class="d-flex flex-row align-center space-evenly elevation-0">
+  <v-card height="90vh" class="d-flex flex-column flex-sm-row align-center space-evenly elevation-0 mt-10 mt-sm-0">
     <div class="d-flex flex-column align-center">
-      <v-card-title class="mb-12 text-h4 font-weight-medium">Regístrate</v-card-title>
+      <v-card-title class="mb-12 text-h6 text-md-h4 font-weight-medium">Regístrate</v-card-title>
       <v-img
           src="../assets/img/membership.svg"
           alt="Registrate"
@@ -153,5 +153,11 @@ svg:first-of-type {
 .prueba {
   border: 1px solid red;
 }
+@media(max-width: 1010px) {
+  svg{
+    z-index: -10;
+  }
+}
+
 
 </style>

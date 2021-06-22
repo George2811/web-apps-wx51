@@ -1,7 +1,7 @@
 <template>
-  <v-card height="82vh" class="d-flex flex-row align-center space-evenly elevation-0">
+  <v-card height="82vh" class="d-flex flex-column flex-sm-row align-center space-evenly elevation-0">
     <div class="d-flex flex-column align-center">
-      <v-card-title class="mb-12 text-h4 font-weight-medium">Iniciar Sesión</v-card-title>
+      <v-card-title class="mb-12 text-h6 text-md-h4 font-weight-medium" he>Iniciar Sesión</v-card-title>
       <v-img
           src="../assets/img/programmer.svg"
           alt="Iniciar Sesion"
@@ -88,7 +88,7 @@ export default {
 
 svg{
   position: fixed;
-  z-index: 150;
+  z-index: 10;
   right: -12%;
   top: 40px;
   height: 370px;
@@ -101,6 +101,12 @@ svg:first-of-type{
 
 .form-container{
   width: 310px;
+}
+@media(max-width: 1010px) {
+  svg{
+    z-index: -10;
+
+  }
 }
 
 
