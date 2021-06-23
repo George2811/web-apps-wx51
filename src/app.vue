@@ -2,10 +2,7 @@
   <v-app>
     <tool-bar :logged="logged"></tool-bar>
     <v-main>
-      <!--
       <router-view @isLogged="login"></router-view>
-      -->
-
     </v-main>
   </v-app>
 </template>
