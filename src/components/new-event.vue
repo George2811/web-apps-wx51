@@ -47,7 +47,7 @@
       <!--Botones-->
       <div class="botones">
         <v-card-actions>
-          <v-btn text @click="close">Retroceder</v-btn>
+          <v-btn class="btn-color" @click="$router.go(-1)" >Regresar</v-btn>
           <v-btn text @click="save" class="crear-btn">Crear</v-btn>
         </v-card-actions>
       </div>
@@ -93,9 +93,6 @@ export default {
             console.log(e);
           })
        */
-    },
-    regresar(){
-      /*cuando  regresa*/
     }
   }
 }

@@ -2,13 +2,15 @@
   <v-app>
     <tool-bar :logged="logged"></tool-bar>
     <v-main>
-      <router-view @isLogged="login"></router-view>
+     <router-view @isLogged="login"></router-view>
+
     </v-main>
   </v-app>
 </template>
 
 <script>
 import ToolBar from "./components/tool-bar";
+
 
 export default {
   name: 'App',
