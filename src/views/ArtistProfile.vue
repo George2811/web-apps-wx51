@@ -9,7 +9,7 @@
       </div>
       <v-card class="d-flex flex-md-row mx-10 mt-10 top-content" color="transparent" elevation="0">
         <div class="flex-column ml-10 mr-5 image-profile">
-          <v-card-title class="d-block text-center white--text text-h5 font-weight-bold">{{artist.brandName}}</v-card-title>
+          <v-card-title class="name-artist d-block text-center white--text text-h5 font-weight-bold">{{artist.brandName}}</v-card-title>
           <v-img
               src="https://picsum.photos/id/1011/800"
               alt="artist image"
@@ -197,7 +197,9 @@ export default {
   position: relative;
   top: 0;
 }
-
+.name-artist{
+  width: 250px;
+}
 .top-content {
   top: 0;
   position: absolute;

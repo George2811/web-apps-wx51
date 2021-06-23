@@ -123,7 +123,7 @@ export default {
     this.retrieveArtwork();
   },
   computed:{
-    colorHearth: function (){
+    colorHearth(){
       return this.isFavorite? 'error': 'dark';
     }
   },

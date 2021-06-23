@@ -20,6 +20,7 @@ export default {
     freeViews:['/','/about','/login', '/register', '/terms&conditions']
   }),
   created() {
+    this.login();
   },
   methods:{
     login(){

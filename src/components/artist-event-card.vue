@@ -17,13 +17,19 @@
             event.eventDescription
           }}
         </p>
-        <v-btn elevation="0" color="white">
-          <v-icon>mdi-currency-usd</v-icon>
-          500
-        </v-btn>
+
       </div>
-      <v-card-actions class="d-flex flex-column align-start">
-        <v-btn class="btn-color text-capitalize text-body-1 font-weight-bold">Agregar</v-btn>
+      <v-card-actions class="d-flex">
+        <v-btn class="btn-color text-capitalize text-body-1 font-weight-bold mr-5" :to="goToEvent">Ver más</v-btn>
+        <v-btn
+            class="ma-2"
+            small
+            fab
+            :color="colorScheduled"
+            @click="isScheduled=!isScheduled"
+        >
+          <v-icon>{{ iconScheduled }}</v-icon>
+        </v-btn>
       </v-card-actions>
     </div>
   </v-card>
@@ -37,7 +43,7 @@ export default {
   components: {},
   data(){
     return{
-
+      isScheduled: false
     }
   },
   created() {
@@ -46,6 +52,11 @@ export default {
   props: [
       'event'
   ],
+  computed:{
+    goToEvent(){ return `/artist/${this.event.artistId}/event/${this.event.eventId}`; },
+    colorScheduled(){ return this.isScheduled? 'dark': 'error'; },
+    iconScheduled(){ return this.isScheduled? 'mdi-minus-circle' : 'mdi-book-plus'; }
+  },
   methods:{
     parseToDate(date){
       return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
