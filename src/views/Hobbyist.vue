@@ -61,7 +61,7 @@
     </v-card>
 
     <v-card elevation="0" class="mx-auto mt-15">
-      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 70%">
+      <v-list-item-content class="d-flex flex-row justify-space-around mx-auto" style="width: 60%">
         <specialty-card v-for="(specialty,i) in specialties" :key="i" :specialtyName="specialty.name" class="mb-10 mx-16 mx-sm-0"></specialty-card>
       </v-list-item-content>
     </v-card>
