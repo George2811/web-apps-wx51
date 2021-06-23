@@ -1,19 +1,21 @@
 <template>
-  <v-card class="d-flex flex-column flex-md-row justify-md-center" max-width="1000" elevation="3">
+  <v-card class="d-flex flex-column justify-center align-center flex-md-row justify-md-center" max-width="1000" elevation="3">
     <v-img
         src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
         alt="Photo"
-        width="500" height="310"
+        max-width="500"
     ></v-img>
     <div class="d-flex flex-column align-center align-md-start justify-space-between py-5 ml-2 pr-3">
       <div>
-        <v-card-title class="text-body-1 font-weight-bold">{{ this.title }}</v-card-title>
+        <v-card-title class="text-body-1 font-weight-bold">{{ event.eventTitle }}</v-card-title>
         <v-btn elevation="0" color="white">
           <v-icon>mdi-calendar</v-icon>
-          15/06/21 - 16/06/21
+          {{ parseToDate(event.dateStart) }} - {{ parseToDate(event.dateEnd) }}
         </v-btn>
         <p class="pl-3 col-10 col-md-12">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam assumenda autem blanditiis, earum
+          {{
+            event.eventDescription
+          }}
         </p>
         <v-btn elevation="0" color="white">
           <v-icon>mdi-currency-usd</v-icon>
@@ -33,10 +35,22 @@
 export default {
   name: "artist-event-card",
   components: {},
+  data(){
+    return{
+
+    }
+  },
+  created() {
+    this.retrieveArtist();
+  },
   props: [
-    "title",
-    "description"
-  ]
+      'event'
+  ],
+  methods:{
+    parseToDate(date){
+      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+    }
+  }
 }
 </script>
 
