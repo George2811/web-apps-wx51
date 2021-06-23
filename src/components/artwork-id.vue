@@ -63,7 +63,7 @@
     </div>
 
     <div class="go-back my-10">
-      <v-btn class="btn-back" depressed text-to="/" to="/home">
+      <v-btn class="btn-back" depressed text-to="/" @click="$router.go(-1)">
         <v-icon class="text-toolbar-btn mr-2">mdi-arrow-left-circle</v-icon> Regresar
       </v-btn>
     </div>

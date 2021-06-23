@@ -7,7 +7,7 @@
     ></v-img>
     <div class="mx-3">
       <v-card-title class="text-body-1 px-0 font-weight-bold pb-2">{{ artwork.artTitle }}</v-card-title>
-      <p class="text-caption text-justify">
+      <p class="text-caption text-justify" style="height: 100px">
         {{
           artwork.artDescription
         }}
@@ -16,7 +16,7 @@
     <v-card-actions class="d-flex justify-space-between mx-2 text-action-btn">
       <v-btn class="text-action-btn" elevation="0" color="white">
         <v-icon>mdi-currency-usd</v-icon>
-        {{ artwork.artCost }}
+        {{ artworkPrice }}
       </v-btn>
       <login-dialog v-if="!logged" text="Ver más"></login-dialog>
       <v-btn v-else color="error" :to="goToArtwork">Ver más</v-btn>
@@ -33,7 +33,8 @@ export default {
     'artwork'
   ],
   computed:{
-    goToArtwork(){ return `/artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; }
+    goToArtwork(){ return `/artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; },
+    artworkPrice(){return this.artwork.artCost===0?'Gratis': this.artwork.artCost; }
   },
   components:{
     LoginDialog

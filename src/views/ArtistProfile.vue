@@ -59,7 +59,8 @@
     <section class="artworks-section">
       <v-card class="mx-1 mx-md-6 mt-5 mb-13" elevation="0" color="transparent">
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
-        <div class="d-flex flex-row align-center">
+        <v-card-title v-if="pageSize===0" class="white--text text-body-1 justify-center">El artista aún no cuenta con obras publicadas.</v-card-title>
+        <div v-else class="d-flex flex-row align-center">
           <v-btn :disabled="page===0" elevation="0" height="auto" width="100px" color="transparent" v-on:click="previousPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text">mdi-chevron-left</v-icon>
@@ -86,7 +87,9 @@
     <section>
       <v-card class="mx-0 mx-sm-9 mx-md-10 mt-5 mb-15" elevation="0" color="transparent" >
         <v-card-title class="text-h5 font-weight-medium">Futuros eventos</v-card-title>
+        <v-card-title v-if="events.length===0" class="darken-2 text-body-1 justify-center">El artista aún no cuenta con eventos.</v-card-title>
         <v-carousel
+            v-else
             max-height="410"
             hide-delimiter-background
             show-arrows-on-hover
