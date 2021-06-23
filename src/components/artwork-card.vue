@@ -33,7 +33,7 @@ export default {
     'artwork'
   ],
   computed:{
-    goToArtwork(){ return `artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; }
+    goToArtwork(){ return `/artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; }
   },
   components:{
     LoginDialog

@@ -9,7 +9,7 @@
       </div>
       <v-card class="d-flex flex-md-row mx-10 mt-10 top-content" color="transparent" elevation="0">
         <div class="flex-column ml-10 mr-5 image-profile">
-          <v-card-title class="d-block text-center white--text text-h5 font-weight-bold">Artist Name</v-card-title>
+          <v-card-title class="name-artist d-block text-center white--text text-h5 font-weight-bold">{{artist.brandName}}</v-card-title>
           <v-img
               src="https://picsum.photos/id/1011/800"
               alt="artist image"
@@ -35,9 +35,9 @@
             </v-btn>
           </div>
           <div>
-            <p class="text-center">"Aquí va texto de una frase célebre Aquí va texto de una frase célebre Aquí va texto
-              de una frase célebre
-              Aquí va texto de una frase célebre"</p>
+            <p class="text-center">"{{
+                artist.phrase
+              }}"</p>
           </div>
         </div>
       </v-card>
@@ -47,12 +47,12 @@
     </section>
 
     <section>
-      <v-card elevation="0" class=" ml-4 ml-md-15 mb-16">
+<!--      <v-card elevation="0" class=" ml-4 ml-md-15 mb-16">-->
+      <v-card elevation="0" class="ml-2 ml-sm-8 mb-7" width="600">
         <v-card-title class="text-h5 font-weight-medium">¿Quién soy?</v-card-title>
-        <p class="description-p col-12">"Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
-          descripción Aquí va
-          texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
-          descripción."</p>
+        <p class="description-p col-12 text-body-2 text-sm-body-1">
+          {{ artist.description }}
+        </p>
       </v-card>
     </section>
 
@@ -60,14 +60,14 @@
       <v-card class="mx-1 mx-md-6 mt-5 mb-13" elevation="0" color="transparent">
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
         <div class="d-flex flex-row align-center">
-          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previusPage"
+          <v-btn :disabled="page===0" elevation="0" height="auto" width="100px" color="transparent" v-on:click="previousPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text">mdi-chevron-left</v-icon>
           </v-btn>
           <v-list-item-content class="d-flex flex-column flex-md-row justify-space-between px-0 px-md-10">
-            <artwork-card v-for="(artwork, i) in showingArtworks" :key="i"></artwork-card>
+            <artwork-card v-for="(artwork, i) in showingArtworks" :key="i" :artwork="artwork" :logged="true"></artwork-card>
           </v-list-item-content>
-          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="nextPage"
+          <v-btn :disabled="(page+3)===pageSize" elevation="0" height="auto" width="100px" color="transparent" v-on:click="nextPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text rounded-circle">mdi-chevron-right</v-icon>
           </v-btn>
@@ -76,8 +76,6 @@
           <div class="text-center d-none">
             <v-pagination
                 v-model="page"
-                v-on:input="updateArtworksPage"
-                :length="this.pageLength"
                 circle
             ></v-pagination>
           </div>
@@ -89,14 +87,14 @@
       <v-card class="mx-0 mx-sm-9 mx-md-10 mt-5 mb-15" elevation="0" color="transparent" >
         <v-card-title class="text-h5 font-weight-medium">Futuros eventos</v-card-title>
         <v-carousel
-            height="900"
+            max-height="410"
             hide-delimiter-background
             show-arrows-on-hover
             light
         >
-          <v-carousel-item v-for="(event, i) in showingArtworks" :key="i">
+          <v-carousel-item v-for="(event, i) in events" :key="i">
             <v-sheet height="100%" class="d-flex justify-center align-center">
-              <artist-event-card :title="event.Name"></artist-event-card>
+              <artist-event-card :event="event"></artist-event-card>
             </v-sheet>
           </v-carousel-item>
         </v-carousel>
@@ -106,30 +104,30 @@
 </template>
 
 <script>
+// Services
+import ArtistApiService from '../services/artists-api.service'
+import ArtworksApiService from '../services/artworks-api.service'
+import EventsApiService from '../services/events-api.service'
 
+// Components
 import ArtworkCard from "../components/artwork-card";
 import ArtistEventCard from "../components/artist-event-card";
 
 export default {
   name: "ArtistProfile",
-  components: {ArtistEventCard, ArtworkCard},
+  components: {
+    ArtworkCard,
+    ArtistEventCard
+  },
   data() {
     return {
-      page: 1,
-      pageLength: 3,
-      pageSize: 3,
-      artworks: [
-        {Name: 'Nombre', Description: 'Description1'},
-        {Name: 'Nombre1', Description: 'Description2'},
-        {Name: 'Nombre2', Description: 'Description3'},
-        {Name: 'Nombre3', Description: 'Descriptio4n'},
-        {Name: 'Nombre4', Description: 'Descriptio5n'},
-        {Name: 'Nombre5', Description: 'Descript6ion'},
-        {Name: 'Nombre6', Description: 'Descripti6on'},
-        {Name: 'Nombre7', Description: 'Descripti6on'},
-        {Name: 'Nombre8', Description: 'Descripti6on'},
-      ],
+      artistId: this.$route.params.artistId,
+      artist: Object,
+      artworks: [],
       showingArtworks: [],
+      events: [],
+      page: 0,
+      pageSize: 0,
       colors: [
         'indigo',
         'warning',
@@ -147,29 +145,45 @@ export default {
     }
   },
   methods: {
-    updateArtworksPage() {
-      console.log(this.page);
-      this.showingArtworks = [
-        this.artworks[(this.page - 1) * this.pageSize],
-        this.artworks[(this.page - 1) * this.pageSize + 1],
-        this.artworks[(this.page - 1) * this.pageSize + 2]
-      ]
-    },
-    previusPage() {
-      if (this.page > 1) {
+    previousPage() {
+      if (this.page > 0){
         this.page--;
-        this.updateArtworksPage();
+        this.retrieveArtworks(this.page);
       }
     },
     nextPage() {
-      if (this.page < this.pageLength) {
+      if ((this.page + 3) < this.pageSize){
         this.page++;
-        this.updateArtworksPage();
+        this.retrieveArtworks(this.page);
       }
-    }
+    },
+    retrieveArtist(){
+      ArtistApiService.get(this.artistId)
+          .then(response => {
+            this.artist = response.data;
+            console.log(this.artist)
+          }).catch(e => { console.log(e); });
+    },
+    retrieveArtworks(num){
+      ArtworksApiService.getAll(this.artistId)
+          .then(response => {
+            this.artworks = response.data;
+            this.pageSize = this.artworks.length;
+            this.showingArtworks = this.artworks.slice(num,num+3);
+          }).catch(e => { console.log(e); })
+    },
+    retrieveEvents(){
+      EventsApiService.getAllByArtistId(this.artistId)
+          .then(response => {
+            this.events = response.data;
+            console.log(this.events)
+          }).catch(e => { console.log(e); })
+    },
   },
   created() {
-    this.updateArtworksPage();
+    this.retrieveArtist();
+    this.retrieveArtworks(this.page);
+    this.retrieveEvents();
   }
 }
 </script>
@@ -183,7 +197,9 @@ export default {
   position: relative;
   top: 0;
 }
-
+.name-artist{
+  width: 250px;
+}
 .top-content {
   top: 0;
   position: absolute;
@@ -217,16 +233,9 @@ export default {
   margin-right: 10px;;
 }
 
-.borde-prueba {
-  border: 3px solid red;
-}
-
-.description-p {
-  width: 750px;
-}
-
 .artworks-section {
   background: linear-gradient(90deg, rgba(236, 187, 61, 1) 0%, rgba(223, 0, 0, 1) 100%);
   padding: 1px 0;
 }
+
 </style>

@@ -31,7 +31,7 @@
         {{getRandomNumber(500)}}
       </v-btn>
       <login-dialog v-if="!logged" text="Conocer"></login-dialog>
-      <v-btn v-else color="error" to="/artist-profile">Conocer</v-btn>
+      <v-btn v-else color="error" :to="goToArtist">Conocer</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -53,6 +53,9 @@ export default {
     return{
       specialties: []
     }
+  },
+  computed: {
+    goToArtist(){ return `/artist/${this.artist.id}`; }
   },
   created() {
     this.retrieveSpecialties()

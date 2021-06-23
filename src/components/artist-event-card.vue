@@ -1,27 +1,35 @@
 <template>
-  <v-card class="d-flex flex-column flex-md-row justify-md-center" max-width="1000" elevation="3">
+  <v-card class="d-flex flex-column justify-center align-center flex-md-row justify-md-center" max-width="1000" elevation="3">
     <v-img
         src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
         alt="Photo"
-        width="500" height="310"
+        max-width="500"
     ></v-img>
     <div class="d-flex flex-column align-center align-md-start justify-space-between py-5 ml-2 pr-3">
       <div>
-        <v-card-title class="text-body-1 font-weight-bold">{{ this.title }}</v-card-title>
+        <v-card-title class="text-body-1 font-weight-bold">{{ event.eventTitle }}</v-card-title>
         <v-btn elevation="0" color="white">
           <v-icon>mdi-calendar</v-icon>
-          15/06/21 - 16/06/21
+          {{ parseToDate(event.dateStart) }} - {{ parseToDate(event.dateEnd) }}
         </v-btn>
         <p class="pl-3 col-10 col-md-12">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam assumenda autem blanditiis, earum
+          {{
+            event.eventDescription
+          }}
         </p>
-        <v-btn elevation="0" color="white">
-          <v-icon>mdi-currency-usd</v-icon>
-          500
-        </v-btn>
+
       </div>
-      <v-card-actions class="d-flex flex-column align-start">
-        <v-btn class="btn-color text-capitalize text-body-1 font-weight-bold">Agregar</v-btn>
+      <v-card-actions class="d-flex">
+        <v-btn class="btn-color text-capitalize text-body-1 font-weight-bold mr-5" :to="goToEvent">Ver más</v-btn>
+        <v-btn
+            class="ma-2"
+            small
+            fab
+            :color="colorScheduled"
+            @click="isScheduled=!isScheduled"
+        >
+          <v-icon>{{ iconScheduled }}</v-icon>
+        </v-btn>
       </v-card-actions>
     </div>
   </v-card>
@@ -33,10 +41,27 @@
 export default {
   name: "artist-event-card",
   components: {},
+  data(){
+    return{
+      isScheduled: false
+    }
+  },
+  created() {
+    this.retrieveArtist();
+  },
   props: [
-    "title",
-    "description"
-  ]
+      'event'
+  ],
+  computed:{
+    goToEvent(){ return `/artist/${this.event.artistId}/event/${this.event.eventId}`; },
+    colorScheduled(){ return this.isScheduled? 'dark': 'error'; },
+    iconScheduled(){ return this.isScheduled? 'mdi-minus-circle' : 'mdi-book-plus'; }
+  },
+  methods:{
+    parseToDate(date){
+      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+    }
+  }
 }
 </script>
 

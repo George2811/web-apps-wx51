@@ -50,9 +50,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Hobbyist.vue')
   },
   {
-    path: '/artist-profile',
+    path: '/artist/:artistId',
     name: 'ArtistProfile',
     component: () => import(/* webpackChunkName: "about" */ '../views/ArtistProfile.vue')
+  },
+  {
+    path: '/artwork/new',
+    name: 'ArtworkNew',
+    component: () => import(/* webpackChunkName: "about" */ '../components/new-artwork')
   },
   {
     path: '*',
