@@ -75,14 +75,14 @@ export default {
     retrieveArtworks(){
       ArtworksApiService.getAll(1)
           .then(response => {
-            this.artworks =response.data;
+            this.artworks =response.data.slice(0,6);
             console.log(this.artworks)
           }).catch(e => { console.log(e); })
     },
     retrieveEvents(){
       EventsApiService.getAllByArtistId(1)
           .then(response => {
-            this.events =response.data;
+            this.events =response.data.slice(0,6);
             // console.log(response.data)
           }).catch(e => { console.log(e); })
     }

@@ -63,7 +63,9 @@
     </div>
 
     <div class="go-back my-10">
-      <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/" to="/home">Regresar</v-btn>
+      <v-btn class="btn-back" depressed text-to="/" to="/home">
+        <v-icon class="text-toolbar-btn mr-2">mdi-arrow-left-circle</v-icon> Regresar
+      </v-btn>
     </div>
 
     <v-dialog
