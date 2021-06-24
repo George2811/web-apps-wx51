@@ -60,6 +60,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../components/new-artwork')
   },
   {
+    path: '/hobbyist/artworks',
+    name: 'HobbyistArtworks',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HobbyistFavoriteArtworks')
+  },
+  {
     path: '*',
     name:'Error404',
     component:()=>import(/* webpackChunkName: "about" */'../components/error404-wildcart.vue')

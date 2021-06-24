@@ -2,8 +2,9 @@
     <v-card color="grey lighten-4" flat tile>
       <v-toolbar dense  height="70px" clipped-left>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up" v-if="!logged"></v-app-bar-nav-icon>
-        <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4">PeruStars</v-toolbar-title>
-        <v-btn v-if="logged" class="text-toolbar-btn ml-4" plain to="/home">Home</v-btn>
+        <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4 mr-3">PeruStars</v-toolbar-title>
+        <v-btn v-if="logged" class="text-toolbar-btn ml-1" plain to="/home"><v-icon>mdi-home</v-icon>Home</v-btn>
+        <v-btn v-if="logged" class="text-toolbar-btn " plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favorites</v-btn>
         <v-spacer></v-spacer>
         <div v-if="!logged" class="hidden-sm-and-down">
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
