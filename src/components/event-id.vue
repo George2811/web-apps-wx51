@@ -1,7 +1,6 @@
 <template>
   <div>
 
-
     <!--CARRUSEL-->
     <v-carousel :show-arrows="true" cycle height="400" class="carousel">
       <v-carousel-item
@@ -100,7 +99,9 @@ export default {
   },
   methods:{
     parseToDate(date){
-      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`;
+      let actualMonth = new Date(date);
+      actualMonth.setMonth(actualMonth.getMonth()+1);
+      return `${new Date(date).getDate()}/${actualMonth.getUTCMonth()}/${new Date(date).getFullYear()}`;
     },
     scheduledEvent(){
       this.isScheduled = !this.isScheduled;
@@ -132,11 +133,6 @@ export default {
   /*padding-right: 30%;*/
   /*padding-left: 5%;*/
 }
-
-.right-content {
-  /*padding-right: 20%;*/
-}
-
 .btn-color {
   color: white;
   background: linear-gradient(175deg, #ff9143 0, #ff824a 12.5%, #ff734e 25%, #ff6352 37.5%, #f25353 50%, #df4453 62.5%, #cd3753 75%, #bd2c54 87.5%, #ae2455 100%);

@@ -1,10 +1,10 @@
 <template>
     <v-card color="grey lighten-4" flat tile>
       <v-toolbar dense  height="70px" clipped-left>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up" v-if="!logged"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
         <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4 mr-3">PeruStars</v-toolbar-title>
-        <v-btn v-if="logged" class="text-toolbar-btn ml-1" plain to="/home"><v-icon>mdi-home</v-icon>Home</v-btn>
-        <v-btn v-if="logged" class="text-toolbar-btn " plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favorites</v-btn>
+        <v-btn v-if="logged" class="text-toolbar-btn ml-1 hidden-sm-and-down" plain to="/home"><v-icon>mdi-home</v-icon>Home</v-btn>
+        <v-btn v-if="logged" class="text-toolbar-btn hidden-sm-and-down" plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favorites</v-btn>
         <v-spacer></v-spacer>
         <div v-if="!logged" class="hidden-sm-and-down">
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
@@ -20,7 +20,7 @@
             height="100vh"
             id = "drawer"
         >
-          <v-list dense nav>
+          <v-list dense nav v-if="!logged">
             <v-list-item
                 v-for="item in buttonsList"
                 :key="item.name"
@@ -31,8 +31,23 @@
                   <v-icon>{{ item.icon }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title to="/about">{{ item.name }}</v-list-item-title>
+                  <v-list-item-title>{{ item.name }}</v-list-item-title>
                 </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list dense nav v-else>
+            <v-list-item
+                v-for="item in loggedButtons"
+                :key="item.name"
+                link
+                :to='item.path'
+            >
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.name }}</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
@@ -46,7 +61,7 @@
           <v-list>
             <v-list-item @click="() => {}">
               <v-list-item-title class="text-body-2">
-                <router-link class="text-body-2" to="/hobbyist/edit">
+                <router-link class="text-body-2" to="/hobbyist/profile">
                   <v-icon size="2rem px-5">mdi-account-edit</v-icon>Perfil
                 </router-link>
               </v-list-item-title>
@@ -80,6 +95,10 @@ export default {
         {name:'About', icon: 'mdi-information', path: '/about'},
         {name:'Login', icon: 'mdi-login', path: '/login'},
         {name:'Register', icon: 'mdi-format-color-highlight', path: '/register'}
+      ],
+      loggedButtons:[
+        {name:'Home', icon: 'mdi-home', path: '/home'},
+        {name:'Favorite', icon: 'mdi-star', path: '/hobbyist/artworks'}
       ]
     }
   }

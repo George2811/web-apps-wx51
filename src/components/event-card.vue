@@ -29,7 +29,7 @@ export default {
   name: "event-card",
   props:[
     'logged',
-      'event'
+    'event'
   ],
   computed:{
     goToEvent(){ return `artist/${this.event.artistId}/event/${this.event.eventId}`; }
@@ -39,7 +39,9 @@ export default {
   },
   methods:{
     parseToDate(date){
-      return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+      let actualMonth = new Date(date);
+      actualMonth.setMonth(actualMonth.getMonth()+1);
+      return `${new Date(date).getDate()}/${actualMonth.getUTCMonth()}/${new Date(date).getFullYear()}`;
     }
   }
 }

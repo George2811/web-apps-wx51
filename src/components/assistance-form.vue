@@ -53,7 +53,8 @@ export default {
       }).catch(e => { console.log(e); })
     },
     assign(){
-      
+      //TODO: assign Hobbyist with Event
+      this.$router.go(-1);
     },
     parseToDate(date){
       let enterDate = new Date(date);
