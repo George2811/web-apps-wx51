@@ -6,12 +6,12 @@
       <v-card-title class="text-center" >Evento registrado exitosamente</v-card-title>
       <v-card-text>
         El evento ha sido registrado de manera exitosa en su calendario.
-        Para continuar haga click en el boton de "Ir al calendario"
+        Para continuar haga click en el boton de "Volver al menu"
       </v-card-text>
       <br>
       <br>
       <v-card-actions>
-        <v-btn text @click="assign" class="btn-color" elevation="2">Ir al Calendario</v-btn>
+        <v-btn text @click="assign" class="btn-color" elevation="2">Volver al menu</v-btn>
       </v-card-actions>
     </v-card>
   </div>
