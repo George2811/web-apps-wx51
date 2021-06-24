@@ -18,10 +18,10 @@
 
     <!--Boton de asistencia-->
     <div class="asist">
-      <v-btn v-if="isScheduled" class="" raised @click="scheduledEvent">
+      <v-btn v-if="isScheduled" class="" raised @click="scheduledEvent" >
         <v-icon class="mr-2">mdi-minus-circle</v-icon>Quitar
       </v-btn>
-      <v-btn v-else class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent">
+      <v-btn v-else class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent" :to="gotoAssistance">
         <v-icon class="mr-2">mdi-book-plus</v-icon>Agendar
       </v-btn>
     </div>
@@ -112,6 +112,11 @@ export default {
         console.log(this.event);
       }).catch(e => { console.log(e); })
     }
+  },
+  computed:{
+   gotoAssistance(){
+     return `/artist/${this.artistId}/event/${this.eventId}/assistance`;
+   }
   }
 }
 </script>
