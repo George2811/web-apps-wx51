@@ -5,7 +5,14 @@
         alt="Photo"
     ></v-img>
     <div class="mx-3">
-      <v-card-title class="text-body-1 font-weight-bold d-block text-center">{{ specialtyName }}</v-card-title>
+      <v-card-title class="text-body-1 font-weight-bold justify-center">
+        <v-btn icon @click="selectSpecialty">
+          <v-icon :color="heartColor">{{heartSymbol}}</v-icon>
+        </v-btn>
+        <h4>
+          {{ specialtyName }}
+        </h4>
+      </v-card-title>
     </div>
 
   </v-card>
@@ -17,14 +24,34 @@ export default {
   name: "specialty-card",
   props: [
       'specialtyName'
-  ]
+  ],
+  data(){
+    return {
+      isFavorite: false,
+      pictures: [
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+          'https://picsum.photos/id/1042/3456/5184',
+      ]
+    }
+  },
+  computed:{
+    heartColor() { return this.isFavorite? 'error' : 'dark'; },
+    heartSymbol() { return this.isFavorite? 'mdi-heart' : 'mdi-heart-outline'; }
+  },
+  methods:{
+    selectSpecialty(){
+      this.isFavorite = !this.isFavorite;
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-.card-title{
-
-}
 
 </style>

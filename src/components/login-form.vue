@@ -24,7 +24,7 @@
         <v-text-field
             v-model="password"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[passwordRules.required, passwordRules.min, passwordRules.mayus, passwordRules.minus, passwordRules.numesp]"
+            :rules="[passwordRules.required]"
             :type="showPassword ? 'text' : 'password'"
             name="input-10-1"
             label="Password"
@@ -64,11 +64,11 @@ export default {
       password: '',
       passwordRules: {
         required: value => !!value || 'La contraseña es requerida.',
-        min: v => v.length >= 8 || 'Mínimo 8 caracteres',
-        emailMatch: () => (`El email o la contraseña introducidas no son correctas`),
-        minus: v => /(?=.*[a-z])/.test(v) || 'Debe haber al menos un caracter en minúscula',
-        mayus: v => /(?=.*[A-Z])/.test(v) || 'Debe haber al menos un caracter en mayúscula',
-        numesp: v => /([!@$%])/.test(v) || /(?=.*\d)/.test(v) || 'Debe tener un número o caracter especial [!@#$%]'
+        // min: v => v.length >= 8 || 'Mínimo 8 caracteres',
+        emailMatch: () => (`El email o la contraseña introducidas no son correctas`)
+        // minus: v => /(?=.*[a-z])/.test(v) || 'Debe haber al menos un caracter en minúscula',
+        // mayus: v => /(?=.*[A-Z])/.test(v) || 'Debe haber al menos un caracter en mayúscula',
+        // numesp: v => /([!@$%])/.test(v) || /(?=.*\d)/.test(v) || 'Debe tener un número o caracter especial [!@#$%]'
       },
       email: '',
       emailRules: [
