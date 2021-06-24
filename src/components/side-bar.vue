@@ -3,17 +3,17 @@
     <br>
     <div class="text-subtitle-1">Tus artistas</div>
     <v-virtual-scroll
-        :items="links"
+        :items="artistsFollowed"
         :item-height="50"
         height="190"
     >
       <template v-slot="{ item }">
-        <v-list-item link>
+        <v-list-item link :to="goToArtist(item.id)">
           <v-list-item-icon>
             <v-icon>mdi-account-circle</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="text-subtitle-2">{{ item[0] }}</v-list-item-title>
+            <v-list-item-title class="text-subtitle-2">{{ item.brandName }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -44,16 +44,12 @@
 </template>
 
 <script>
+// Services
+import ArtistApiService from '../services/artists-api.service'
 export default {
   name: "side-bar",
   data: () => ({
-    links: [
-      ['Da Vinci', 'Inbox'],
-      ['Gianmarco', 'Send'],
-      ['Van Goh', 'Trash'],
-      ['Leonardo', 'Spam'],
-      ['Donatello', 'Trash'],
-    ],
+    artistsFollowed: [],
     titles: [
       'event1',
       'event2',
@@ -63,7 +59,20 @@ export default {
       'event6',
       'event7',
     ]
-  })
+  }),
+  created() {
+    this.retrieveArtist();
+  },
+  methods:{
+    retrieveArtist() {
+      ArtistApiService.getAll()
+      .then(response => {
+        this.artistsFollowed = response.data;
+        console.log(this.artistsFollowed);
+      }).catch(e => { console.log(e);} )
+    },
+    goToArtist(num){ return `/artist/${num}`; }
+  }
 }
 </script>
 

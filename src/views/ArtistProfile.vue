@@ -202,6 +202,7 @@ export default {
 }
 .name-artist{
   width: 250px;
+  margin-left: -25px;
 }
 .top-content {
   top: 0;

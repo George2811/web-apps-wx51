@@ -18,7 +18,12 @@
 
     <!--Boton de asistencia-->
     <div class="asist">
-      <v-btn class="text-toolbar-btn mr-4 white--text btn-color" elevation="1" text-to="/">Asistir</v-btn>
+      <v-btn v-if="isScheduled" class="" raised @click="scheduledEvent">
+        <v-icon class="mr-2">mdi-minus-circle</v-icon>Quitar
+      </v-btn>
+      <v-btn v-else class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent">
+        <v-icon class="mr-2">mdi-book-plus</v-icon>Agendar
+      </v-btn>
     </div>
     <br>
 
@@ -73,6 +78,7 @@ export default {
       artistId: this.$route.params.artistId,
       eventId: this.$route.params.eventId,
       event: Object,
+      isScheduled: false,
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
@@ -95,6 +101,9 @@ export default {
   methods:{
     parseToDate(date){
       return `${new Date(date).getDate()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`;
+    },
+    scheduledEvent(){
+      this.isScheduled = !this.isScheduled;
     },
     retrieveEvent() {
       EventsApiService.get(this.artistId,this.eventId)

@@ -32,7 +32,7 @@
         <br>
         <p>
           <v-icon color="red">mdi-cash-multiple</v-icon>
-          S/. {{ artwork.artCost }}
+          {{ artworkPrice }}
         </p>
         <v-btn>
           <v-icon color="red">mdi-share-variant</v-icon>
@@ -127,6 +127,9 @@ export default {
   computed:{
     colorHearth(){
       return this.isFavorite? 'error': 'dark';
+    },
+    artworkPrice(){
+      return this.artwork.artCost === 0? 'Gratis': `S/. ${this.artwork.artCost}`;
     }
   },
   methods:{
