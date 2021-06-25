@@ -15,7 +15,7 @@ import ToolBar from "./components/tool-bar";
 export default {
   name: 'App',
   components: {
-    ToolBar
+    ToolBar,
   },
   data: () => ({
     logged: false,
