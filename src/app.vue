@@ -2,21 +2,18 @@
   <v-app>
     <tool-bar :logged="logged"></tool-bar>
     <v-main>
-<!--      <router-view @isLogged="login"></router-view>-->
-      <ArtistProfileEdit></ArtistProfileEdit>
+      <router-view @isLogged="login"></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import ToolBar from "./components/tool-bar";
-import ArtistProfileEdit from "./views/ArtistProfileEdit";
 
 export default {
   name: 'App',
   components: {
     ToolBar,
-    ArtistProfileEdit,
   },
   data: () => ({
     logged: false
