@@ -6,12 +6,12 @@
     ></v-img>
     <div class="mx-3">
       <v-card-title class="text-body-1 font-weight-bold justify-center">
-        <v-btn icon @click="selectSpecialty">
-          <v-icon :color="heartColor">{{heartSymbol}}</v-icon>
-        </v-btn>
         <h4>
           {{ specialtyName }}
         </h4>
+        <v-btn icon @click="selectSpecialty">
+          <v-icon :color="heartColor">{{heartSymbol}}</v-icon>
+        </v-btn>
       </v-card-title>
     </div>
 
@@ -42,7 +42,7 @@ export default {
   },
   computed:{
     heartColor() { return this.isFavorite? 'error' : 'dark'; },
-    heartSymbol() { return this.isFavorite? 'mdi-heart' : 'mdi-heart-outline'; }
+    heartSymbol() { return this.isFavorite? 'mdi-check-circle' : 'mdi-check-circle-outline'; }
   },
   methods:{
     selectSpecialty(){

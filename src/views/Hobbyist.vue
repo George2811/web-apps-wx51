@@ -70,7 +70,7 @@
           depressed
           color="error"
       >
-        Guardar cambios
+        Actualizar
       </v-btn>
     </div>
   </div>

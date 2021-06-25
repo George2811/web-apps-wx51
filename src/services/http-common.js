@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: 'http://sebasgx-001-site1.itempurl.com/api',
+    baseURL: 'https://perustarsapi.azurewebsites.net/api/',
     headers: {
         'Content-type':'application/json',
         'Access-Control-Allow-Origin' : '*',
