@@ -77,7 +77,7 @@
     <section class="artworks-section">
       <v-card class="mx-10 mt-5 mb-13" elevation="0" color="transparent">
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
-          <v-btn class="agregar">Agregar +</v-btn>
+          <v-btn class="agregar" to="/artwork/new">Agregar +</v-btn>
         <div class="d-flex flex-row align-center">
           <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previusPage"
                  class="rounded-circle">
@@ -107,7 +107,7 @@
     <section>
       <v-card class="mx-10 mt-5 mb-15" elevation="0" color="transparent">
         <v-card-title class="text-h5 font-weight-medium">Futuros eventos</v-card-title>
-        <v-btn class="agregar">Agregar +</v-btn>
+        <v-btn class="agregar" to="/event/new">Agregar +</v-btn>
         <v-carousel
             height="400"
             hide-delimiter-background

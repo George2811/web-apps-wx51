@@ -60,6 +60,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../components/new-artwork')
   },
   {
+    path: '/event/new',
+    name: 'EventNew',
+    component: () => import('../components/new-event.vue')
+  },
+  {
     path: '/hobbyist/artworks',
     name: 'HobbyistArtworks',
     component: () => import(/* webpackChunkName: "about" */ '../views/HobbyistFavoriteArtworks')
@@ -73,7 +78,13 @@ const routes = [
     path: '*',
     name:'Error404',
     component:()=>import(/* webpackChunkName: "about" */'../components/error404-wildcart.vue')
+  },
+  {
+    path:'/homeArtist',
+    name:'homeArtist',
+    component:()=>import('../views/ArtistProfileEdit.vue')
   }
+
 ]
 
 const router = new VueRouter({
