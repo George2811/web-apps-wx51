@@ -7,7 +7,8 @@
         Artistas
       </v-card-title>
       <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-        <artist-card :logged="logged" v-for="(artist,i) in artists" :key="i" :artist="artist" class="mb-10"></artist-card>
+        <artist-card :logged="logged" v-for="(artist,i) in artists" :key="i" :artist="artist"
+                     class="mb-10"></artist-card>
       </v-list-item-content>
       <v-divider></v-divider>
 
@@ -15,7 +16,8 @@
         Obras de Arte
       </v-card-title>
       <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-        <artwork-card :logged="logged" v-for="(artwork,i) in artworks" :key="i" :artwork="artwork" class="mb-10"></artwork-card>
+        <artwork-card :logged="logged" v-for="(artwork,i) in artworks" :key="i" :artwork="artwork"
+                      class="mb-10"></artwork-card>
       </v-list-item-content>
       <v-divider></v-divider>
 
@@ -65,26 +67,46 @@ export default {
     printRoute() {
       console.log(this.roue);
     },
-    retrieveArtists(){
+    retrieveArtists() {
       ArtistApiService.getAll()
           .then(response => {
-            this.artists = response.data.slice(0,6);
+            this.artists = response.data.slice(0, 6);
             // console.log(this.artists)
-          }).catch(e => { console.log(e); })
+          }).catch(e => {
+        console.log(e);
+      })
     },
-    retrieveArtworks(){
+    retrieveArtworks() {
       ArtworksApiService.getAll(1)
           .then(response => {
-            this.artworks =response.data.slice(0,6);
+            this.artworks.push(...response.data.slice(0, 3));
+          }).catch(e => {
+        console.log(e);
+      });
+
+      ArtworksApiService.getAll(2)
+          .then(response => {
+            this.artworks.push(...response.data.slice(0, 3));
             console.log(this.artworks)
-          }).catch(e => { console.log(e); })
+          }).catch(e => {
+        console.log(e);
+      });
     },
-    retrieveEvents(){
+    retrieveEvents() {
       EventsApiService.getAllByArtistId(1)
           .then(response => {
-            this.events =response.data.slice(0,6);
-            // console.log(response.data)
-          }).catch(e => { console.log(e); })
+            this.events.push(...response.data.slice(0, 3));
+
+          }).catch(e => {
+        console.log(e);
+      });
+      EventsApiService.getAllByArtistId(2)
+          .then(response => {
+            this.events.push(...response.data.slice(0, 3));
+            console.log(this.events)
+          }).catch(e => {
+        console.log(e);
+      });
     }
   },
   created() {
@@ -92,7 +114,6 @@ export default {
     this.retrieveArtworks();
     this.retrieveArtists();
     this.retrieveEvents();
-
   }
 }
 </script>

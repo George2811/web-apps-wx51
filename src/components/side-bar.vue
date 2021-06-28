@@ -68,7 +68,7 @@ export default {
       ArtistApiService.getAll()
       .then(response => {
         this.artistsFollowed = response.data;
-        console.log(this.artistsFollowed);
+        //console.log(this.artistsFollowed);
       }).catch(e => { console.log(e);} )
     },
     goToArtist(num){ return `/artist/${num}`; }

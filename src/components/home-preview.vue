@@ -12,29 +12,37 @@
     <v-container>
       <v-card elevation="0" class="mx-sm-5 mt-15 d-flex flex-column align-center align-sm-start">
         <v-card-title class="px-0 text-h5 font-weight-medium">
-          <v-icon>mdi-palette</v-icon>Obras Destacadas
+          <v-icon>mdi-palette</v-icon>
+          Obras Destacadas
         </v-card-title>
-        <v-list-item-content class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
-          <artwork-card v-for="(artwork,i) in artworks" :key="i" :artwork="artwork" class="mb-10 mr-sm-1 mr-lg-0"></artwork-card>
+        <v-list-item-content
+            class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
+          <artwork-card v-for="(artwork,i) in artworks" :key="i" :artwork="artwork"
+                        class="mb-10 mr-sm-1 mr-lg-0"></artwork-card>
         </v-list-item-content>
       </v-card>
       <v-divider></v-divider>
 
       <v-card elevation="0" class="mx-sm-5 mt-15 d-flex flex-column align-center align-sm-start">
         <v-card-title class="px-0 text-h5 font-weight-medium">
-          <v-icon>mdi-palette</v-icon>Nuevos Artistas
+          <v-icon>mdi-palette</v-icon>
+          Nuevos Artistas
         </v-card-title>
-        <v-list-item-content class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
-          <artist-card v-for="(artist,i) in artists" :key="i" :artist="artist" class="mb-10 mr-sm-1 mr-lg-0"></artist-card>
+        <v-list-item-content
+            class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
+          <artist-card v-for="(artist,i) in artists" :key="i" :artist="artist"
+                       class="mb-10 mr-sm-1 mr-lg-0"></artist-card>
         </v-list-item-content>
       </v-card>
       <v-divider></v-divider>
 
       <v-card elevation="0" class="mx-sm-5 mt-15 d-flex flex-column align-center align-sm-start">
         <v-card-title class="px-0 text-h5 font-weight-medium">
-          <v-icon>mdi-palette</v-icon>Próximos eventos
+          <v-icon>mdi-palette</v-icon>
+          Próximos eventos
         </v-card-title>
-        <v-list-item-content class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
+        <v-list-item-content
+            class="d-flex flex-column flex-sm-row justify-space-between justify-sm-space-around justify-md-start justify-lg-space-between">
           <event-card v-for="(event,i) in events" :key="i" :event="event" class="mb-10 mr-sm-1 mr-lg-0"></event-card>
         </v-list-item-content>
       </v-card>
@@ -88,9 +96,9 @@ export default {
     this.retrieveArtists();
     this.retrieveEvents();
   },
-  methods:{
-    getDisplayArtists(artist){
-      return{
+  methods: {
+    getDisplayArtists(artist) {
+      return {
         id: 2,
         brandName: artist.brandName,
         description: artist.description,
@@ -100,26 +108,39 @@ export default {
         lastname: artist.lastname
       }
     },
-    retrieveArtists(){
+    retrieveArtists() {
       ArtistApiService.getAll()
-      .then(response => {
-        this.artists = response.data.slice(0,8);
-        this.displayArtists = response.data.map(this.getDisplayArtists);
-        // console.log(this.artists)
-      }).catch(e => { console.log(e); })
+          .then(response => {
+            this.artists = response.data.slice(0, 8);
+            this.displayArtists = response.data.map(this.getDisplayArtists);
+            // console.log(this.artists)
+          }).catch(e => {
+        console.log(e);
+      })
     },
-    retrieveArtworks(){
+    retrieveArtworks() {
       ArtworksApiService.getAll(1)
-      .then(response => {
-        this.artworks = response.data.slice(0, 8);
-      }).catch(e => { console.log(e); })
+          .then(response => {
+            this.artworks = response.data.slice(0, 8);
+          }).catch(e => {
+        console.log(e);
+      })
     },
-    retrieveEvents(){
+    retrieveEvents() {
       EventsApiService.getAllByArtistId(1)
           .then(response => {
-            this.events =response.data.slice(0, 8);
-            // console.log(response.data)
-          }).catch(e => { console.log(e); })
+            this.events.push(...response.data.slice(0, 3));
+          }).catch(e => {
+        console.log(e);
+      });
+      EventsApiService.getAllByArtistId(2)
+          .then(response => {
+            this.events.push(...response.data.slice(0, 3));
+            console.log(this.events)
+          }).catch(e => {
+        console.log(e);
+      });
+
     }
   }
 }

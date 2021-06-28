@@ -7,6 +7,9 @@ class HobbyistsApiService {
     get(hobbyistId) {
         return http.get(`/hobbyists/${hobbyistId}`);
     }
+    getByUserId(userId) {
+        return http.get(`/hobbyists/user/${userId}`);
+    }
     create(data) {
         return http.post(`/hobbyists`, data);
     }
