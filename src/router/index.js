@@ -80,8 +80,8 @@ const routes = [
     component:()=>import(/* webpackChunkName: "about" */'../components/error404-wildcart.vue')
   },
   {
-    path:'/homeArtist',
-    name:'homeArtist',
+    path:'/home/artist/profile',
+    name:'HomeArtist',
     component:()=>import('../views/ArtistProfileEdit.vue')
   }
 

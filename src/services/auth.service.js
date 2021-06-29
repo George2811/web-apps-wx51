@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const API_URL = 'https://perustarsapi.azurewebsites.net/api/users/authenticate';
+const API_URL = 'https://perustarsapi.azurewebsites.net/api/users';
 
 class AuthService{
     login(user){
         console.log('About the request');
-        return axios.post(API_URL, JSON.stringify({
+        return axios.post(API_URL+'/authenticate', JSON.stringify({
             username: user.username,
             password: user.password}),
             {headers: {'Content-Type': 'application/json'}})
@@ -35,7 +35,7 @@ class AuthService{
         localStorage.removeItem('user');
     }
     register(user){
-        return axios.post(API_URL + 'sign-up',{
+        return axios.post(API_URL,{
             // Attributes of the class USER
             username: user.username,
             password: user.password

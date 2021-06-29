@@ -10,17 +10,9 @@
       >
       </v-img>
     </div>
-    <v-form v-model="valid" class="form-container">
+    <v-form v-model="valid" class="form-container" @submit.prevent="registerUser(radioGroup)">
       <v-container class="d-flex flex-column">
-        <v-text-field
-            v-model="username"
-            :rules="usernameRules"
-            label="Username"
-            placeholder="Ex.great_artist21"
-            required
-            outlined
-        >
-        </v-text-field>
+
         <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -49,13 +41,15 @@
         <v-radio class="mr-0" label="Aficionado" :value="2" color="red"></v-radio>
       </v-radio-group>
       <div class="d-flex justify-center">
-        <v-checkbox v-model="checkBox" color="red" label="Términos y condiciones" @click.stop="open" readonly :rules="checkBoxRules"></v-checkbox>
+        <v-checkbox v-model="checkBox" color="red" label="Términos y condiciones" @click.stop="open" readonly
+                    :rules="checkBoxRules"></v-checkbox>
         <v-dialog v-model="dialog" width="55%" @close="checkBox = false">
           <terms-and-conditions v-on:close-dialog="close" v-on:created="checkBox=false"/>
         </v-dialog>
       </div>
       <v-card-actions class="d-flex justify-center">
-        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" @click="sendUserToNextPage(radioGroup)">Register</v-btn>
+        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" type="submit">Register</v-btn>
+        <v-btn class="text-capitalize text-body-2" color="error">Prueba</v-btn>
       </v-card-actions>
     </v-form>
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -72,8 +66,11 @@
 </template>
 
 <script>
-
+// Services
+import User from '../models/user'
+//Components
 import TermsAndConditions from "./terms-and-conditions";
+
 export default {
 
   name: "register-form",
@@ -85,11 +82,6 @@ export default {
       radioGroup: 1,
       showPassword: false,
       valid: false,
-      username: '',
-      usernameRules: [
-        value => !!value || 'El username es requerido.',
-        v => v.length >= 8 || 'Mínimo 8 caracteres',
-      ],
       password: '',
       passwordRules: {
         required: value => !!value || 'La contraseña es requerida.',
@@ -105,23 +97,47 @@ export default {
         v => /.+@.+/.test(v) || 'El e-mail debe ser válido',
       ],
       checkBoxRules: [
-          v => !!v || 'Debes aceptar los términos y condiciones'
+        v => !!v || 'Debes aceptar los términos y condiciones'
       ]
     }
   },
   methods: {
-    open(){
+    open() {
       this.dialog = true;
     },
-    close(checkBox){
+    close(checkBox) {
       this.dialog = false;
       this.checkBox = checkBox;
     },
-    sendUserToNextPage(radioValue){
+    sendUserToNextPage(radioValue) {
       if (radioValue == 1)
-        this.$router.push({name: 'ArtistProfile'})
+        this.$router.push('/home/artist/profile')
       else
-        this.$router.push({name:'Home'});
+        this.$router.push('/home');
+    },
+    registerUser(radioValue) {
+      if (this.email && this.password) {
+        let newUser = new User(this.email, this.password);
+        this.$store.dispatch('auth/register', newUser)
+            .then(response => {
+              console.log(response);
+              this.handleLogin(newUser, radioValue);
+            }).catch(e => {
+          console.log(e);
+        });
+      }
+    },
+    handleLogin(user, radio) {
+      this.$store.dispatch('auth/login', user).then(
+          (userId) => {
+            console.log('Logged In ' + userId);
+            this.sendUserToNextPage(radio);
+          },
+          error => {
+            console.log('The login failed' + error.response);
+          }
+      );
+
     }
   }
 }
@@ -153,8 +169,9 @@ svg:first-of-type {
 .prueba {
   border: 1px solid red;
 }
-@media(max-width: 1010px) {
-  svg{
+
+@media (max-width: 1010px) {
+  svg {
     z-index: -10;
   }
 }
