@@ -240,7 +240,6 @@ export default {
   top: 0;
   position: absolute;
 }
-
 .mr-20 {
   margin-right: 150px;
   margin-top: -130px;

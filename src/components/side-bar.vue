@@ -13,7 +13,7 @@
             <v-icon>mdi-account-circle</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="text-subtitle-2">{{ item.brandName }}</v-list-item-title>
+            <v-list-item-title class="text-subtitle-2">{{ item.firstname }} {{item.lastname}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>

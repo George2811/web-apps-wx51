@@ -38,14 +38,25 @@
           <v-icon color="red">mdi-share-variant</v-icon>
           Compartir
         </v-btn>
-        <v-btn
+        <v-btn v-if="isFavorite"
             class="mx-4"
             fab
             small
             color="white"
-            @click="addFavorite()"
+            @click="unAssignFavorite()"
         >
-          <v-icon :color="colorHearth">
+          <v-icon color="error">
+            mdi-heart
+          </v-icon>
+        </v-btn>
+        <v-btn v-else
+            class="mx-4"
+            fab
+            small
+            color="white"
+            @click="assignFavorite()"
+        >
+          <v-icon color="dark">
             mdi-heart
           </v-icon>
         </v-btn>
@@ -96,6 +107,7 @@
 
 <script>
 import ArtworksApiService from '../services/artworks-api.service'
+import FavoriteArtworksApiService from '../services/favorite-artworks-api.service'
 export default {
   name: "artwork-id",
   data() {
@@ -104,6 +116,7 @@ export default {
       artistId : this.$route.params.artistId,
       artworkId : this.$route.params.artworkId,
       artwork : Object,
+      userId: JSON.parse(localStorage.getItem('person')).id,
       items: [
         {
           src: require('../assets/img/principal-img.jpg'),
@@ -123,25 +136,44 @@ export default {
   },
   created() {
     this.retrieveArtwork();
+    this.isFavoriteArtwork();
   },
   computed:{
-    colorHearth(){
-      return this.isFavorite? 'error': 'dark';
-    },
     artworkPrice(){
       return this.artwork.artCost === 0? 'Gratis': `S/. ${this.artwork.artCost}`;
     }
   },
   methods:{
-    addFavorite(){
-      this.isFavorite = !this.isFavorite;
-    },
     retrieveArtwork(){
       ArtworksApiService.get(this.artistId, this.artworkId)
       .then(response => {
         this.artwork = response.data;
         console.log(this.artwork)
       }).catch(e => { console.log(e); })
+    },
+    isFavoriteArtwork(){
+      FavoriteArtworksApiService.getAll(this.userId)
+          .then(response => {
+            response.data.forEach(artwork => {
+              console.log(artwork);
+              if (artwork.artworkId === parseInt(this.artworkId))
+                this.isFavorite = true;
+            });
+          }).catch(e => { console.log(e); })
+    },
+    assignFavorite(){
+      FavoriteArtworksApiService.assign(this.userId, this.artworkId)
+      .then(response => {
+        console.log(response.data);
+        this.isFavorite = true;
+      }).catch(e => { console.log(e); })
+    },
+    unAssignFavorite(){
+      FavoriteArtworksApiService.unAssign(this.userId, this.artworkId)
+          .then(response => {
+            console.log(response.data);
+            this.isFavorite = false;
+          }).catch(e => { console.log(e); })
     }
   }
 }
