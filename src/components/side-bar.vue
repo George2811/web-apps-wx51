@@ -45,8 +45,9 @@
 
 <script>
 // Services
-import ArtistApiService from '../services/artists-api.service'
+import FollowsApiService from '../services/follows-api.service'
 import AssistancesApiService from '../services/event-assistances-api.service'
+
 export default {
   name: "side-bar",
   data: () => ({
@@ -55,16 +56,16 @@ export default {
     userId: JSON.parse(localStorage.getItem('person')).id
   }),
   created() {
-    this.retrieveArtist();
+    this.retrieveFollowedArtists();
     this.retrieveEvents();
   },
   methods:{
-    retrieveArtist() {
-      ArtistApiService.getAll()
+
+    retrieveFollowedArtists(){
+      FollowsApiService.getAll(this.userId)
       .then(response => {
         this.artistsFollowed = response.data;
-        //console.log(this.artistsFollowed);
-      }).catch(e => { console.log(e);} )
+      }).catch(e => { console.log(e); })
     },
     goToArtist(num){ return `/artist/${num}`; },
     retrieveEvents(){

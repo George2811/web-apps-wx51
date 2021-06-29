@@ -4,14 +4,14 @@
       Mis Obras Favoritas
     </v-card-title>
     <v-list-item-content class="d-flex flex-row mx-auto justify-space-around col-10">
-      <artwork-card :logged="logged" v-for="(artwork,i) in artworks" :key="i" :artwork="artwork" class="mb-10"></artwork-card>
+      <artwork-card :logged="logged" v-for="(artwork,i) in favoriteArtworks" :key="i" :artwork="artwork" class="mb-10"></artwork-card>
     </v-list-item-content>
   </div>
 </template>
 
 <script>
 // Services
-import ArtworkApiService from '../services/artworks-api.service'
+import FavoriteArtworksApiService from '../services/favorite-artworks-api.service'
 // Components
 import ArtworkCard from '../components/artwork-card'
 export default {
@@ -22,18 +22,19 @@ export default {
   data(){
     return {
       logged: true,
-      artworks: []
+      favoriteArtworks: [],
+      userId: JSON.parse(localStorage.getItem('person')).id
     }
   },
   created() {
-    this.retrieveArtworks();
+    this.retrieveFavoriteArtworks();
   },
   methods:{
-    retrieveArtworks(){
-      ArtworkApiService.getAll(1)
+    retrieveFavoriteArtworks(){
+      FavoriteArtworksApiService.getAll(this.userId)
       .then(response => {
-        this.artworks = response.data;
-      })
+        this.favoriteArtworks = response.data
+      }).catch(e => { console.log(e); })
     }
   }
 }
