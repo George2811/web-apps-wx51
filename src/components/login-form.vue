@@ -80,13 +80,8 @@ export default {
       user: {
         username: '',
         password: ''
-        //username: 'vangogh@hotmail.com',
-        //password: 'Password1#'
       }
     }
-  },
-  created() {
-    //UserApiService.getAll();
   },
   methods:{
     sendForm(){
@@ -103,7 +98,7 @@ export default {
               this.goToRoute(userId);
             },
             error => {
-              console.log('The login failed'+error.response.data);
+              console.log('The login failed'+ error.response);
             }
         );
       }
@@ -112,6 +107,9 @@ export default {
       HobbyistsApiService.getByUserId(id)
           .then( response =>{
             console.log(response);
+            this.$store.dispatch('auth/savePerson', response.data);
+            //this.$store.state.auth.person = response.data;
+            //localStorage.setItem('person',JSON.stringify(response.data));
             this.$router.push('/home');
           }).catch(e =>{
         console.log(e);
@@ -119,7 +117,10 @@ export default {
       ArtistsApiService.getByUserId(id)
           .then( response =>{
             console.log(response);
-            this.$router.push(`/artist/${response.data.id}`);
+            this.$store.dispatch('auth/savePerson', response.data);
+            //this.$store.state.auth.person = response.data;
+            //localStorage.setItem('person',JSON.stringify(response.data));
+          this.$router.push(`/artist/${response.data.id}`);
           }).catch(e =>{
         console.log(e);
       });

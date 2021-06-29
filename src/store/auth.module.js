@@ -5,15 +5,19 @@ const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user
     ? {status: { loggedIn: true }, user}
     :{ status: { loggedIn: false }, user: null };
-
+const person = {};
 export const auth = {
     namespaced: true,
-    state: initialState,
+    state: {
+        initialState,
+        person
+    },
     actions: {
         login({commit}, user) {
             return AuthService.login(user).then(
                 user => {
                     commit('loginSuccess', user);
+                    //commit('loggedPerson', assignedPerson);
                     return Promise.resolve(user);
                 },
                 error => {
@@ -35,26 +39,33 @@ export const auth = {
                     commit('registerFailure');
                     return Promise.reject(error);
                 });
+        },
+        savePerson({commit}, loggedPerson){
+            commit('loggedPerson', loggedPerson);
+            localStorage.setItem('person',JSON.stringify(loggedPerson));
         }
     },
     mutations:{
         loginSuccess(state, user){
-            state.status.loggedIn = true;
-            state.user = user;
+            state.initialState.status.loggedIn = true;
+            state.initialState.user = user;
         },
         loginFailure(state){
-            state.status.loggedIn = false;
-            state.user = null;
+            state.initialState.status.loggedIn = false;
+            state.initialState.user = null;
         },
         logout(state){
-            state.status.loggedIn = false;
-            state.user = null;
+            state.initialState.status.loggedIn = false;
+            state.initialState.user = null;
         },
         registerSuccess(state){
-            state.status.loggedIn = false;
+            state.initialState.status.loggedIn = false;
         },
         registerFailure(state){
-            state.status.loggedIn = false;
+            state.initialState.status.loggedIn = false;
+        },
+        loggedPerson(state, payload){
+            state.person = payload;
         }
     }
 }
