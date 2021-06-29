@@ -7,7 +7,7 @@ class EventAssistancesApiService {
     assign(hobbyistId, eventId) {
         return http.post(`/hobbyists/${hobbyistId}/events`, eventId)
     }
-    unassign(hobbyistId, eventId) {
+    unAssign(hobbyistId, eventId) {
         return http.delete(`/hobbyists/${hobbyistId}/events/${eventId}`);
     }
 }

@@ -121,10 +121,19 @@ export default {
     retrieveArtworks() {
       ArtworksApiService.getAll(1)
           .then(response => {
-            this.artworks = response.data.slice(0, 8);
+            //this.artworks = response.data.slice(0, 8);
+            this.artworks.push(...response.data.slice(0, 3));
+          }).catch(e => { console.log(e); });
+      ArtworksApiService.getAll(2)
+          .then(response => {
+            this.artworks.push(...response.data.slice(0, 3));
           }).catch(e => {
-        console.log(e);
-      })
+            console.log(e);});
+      ArtworksApiService.getAll(3)
+          .then(response => {
+            this.artworks.push(...response.data.slice(0, 2));
+          }).catch(e => {
+        console.log(e);});
     },
     retrieveEvents() {
       EventsApiService.getAllByArtistId(1)
@@ -136,6 +145,13 @@ export default {
       EventsApiService.getAllByArtistId(2)
           .then(response => {
             this.events.push(...response.data.slice(0, 3));
+            console.log(this.events)
+          }).catch(e => {
+        console.log(e);
+      });
+      EventsApiService.getAllByArtistId(3)
+          .then(response => {
+            this.events.push(...response.data.slice(0, 2));
             console.log(this.events)
           }).catch(e => {
         console.log(e);
