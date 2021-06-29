@@ -7,6 +7,9 @@ class ArtistsApiService {
     get(id) {
         return http.get(`/artists/${id}`)
     }
+    getByUserId(id) {
+        return http.get(`/artists/user/${id}`)
+    }
     create(data) {
         return http.post('/artists', data);
     }

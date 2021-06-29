@@ -10,7 +10,7 @@
       >
       </v-img>
     </div>
-    <v-form v-model="valid" class="form-container">
+    <v-form v-model="valid" class="form-container" @submit.prevent="handleLogin">
       <v-container class="d-flex flex-column">
         <v-text-field
             v-model="email"
@@ -36,7 +36,7 @@
         ></v-text-field>
       </v-container>
       <v-card-actions class="d-flex justify-center">
-        <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" to="/home">Login</v-btn>
+        <v-btn class="text-capitalize text-body-2" type="submit" color="error" :disabled="!valid">Login</v-btn>
       </v-card-actions>
     </v-form>
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,9 @@
 </template>
 
 <script>
-
+//import UserApiService from '../services/users-api.service'
+import HobbyistsApiService from '../services/hobbyists-api.service'
+import ArtistsApiService from '../services/artists-api.service'
 export default {
 
   name: "login-form",
@@ -74,9 +76,56 @@ export default {
       emailRules: [
         v => !!v || 'El e-mail es requerido',
         v => /.+@.+/.test(v) || 'El e-mail debe ser válido',
-      ]
+      ],
+      user: {
+        username: '',
+        password: ''
+      }
     }
   },
+  methods:{
+    sendForm(){
+      this.user.username = this.email;
+      this.user.password = this.password;
+      console.log(this.user);
+    },
+    handleLogin(){
+      this.sendForm();
+      if(this.user.username && this.user.password){
+        this.$store.dispatch('auth/login', this.user).then(
+            (userId) => {
+              console.log('Logged In '+ userId);
+              this.goToRoute(userId);
+            },
+            error => {
+              console.log('The login failed'+ error.response);
+            }
+        );
+      }
+    },
+    goToRoute(id){
+      HobbyistsApiService.getByUserId(id)
+          .then( response =>{
+            console.log(response);
+            this.$store.dispatch('auth/savePerson', response.data);
+            //this.$store.state.auth.person = response.data;
+            //localStorage.setItem('person',JSON.stringify(response.data));
+            this.$router.push('/home');
+          }).catch(e =>{
+        console.log(e);
+      });
+      ArtistsApiService.getByUserId(id)
+          .then( response =>{
+            console.log(response);
+            this.$store.dispatch('auth/savePerson', response.data);
+            //this.$store.state.auth.person = response.data;
+            //localStorage.setItem('person',JSON.stringify(response.data));
+          this.$router.push(`/artist/${response.data.id}`);
+          }).catch(e =>{
+        console.log(e);
+      });
+    }
+  }
 }
 </script>
 

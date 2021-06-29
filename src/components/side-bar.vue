@@ -23,17 +23,17 @@
     <br>
     <div class="text-subtitle-1">Tus eventos</div>
     <v-virtual-scroll
-        :items="titles"
+        :items="eventsCalendar"
         :item-height="50"
         height="190"
     >
       <template v-slot="{ item }">
-        <v-list-item link>
+        <v-list-item link @click="goToEventId(item)">
           <v-list-item-icon>
             <v-icon>mdi-calendar</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="text-subtitle-2">{{ item }}</v-list-item-title>
+            <v-list-item-title class="text-subtitle-2">{{ item.eventTitle }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -45,33 +45,39 @@
 
 <script>
 // Services
-import ArtistApiService from '../services/artists-api.service'
+import FollowsApiService from '../services/follows-api.service'
+import AssistancesApiService from '../services/event-assistances-api.service'
+
 export default {
   name: "side-bar",
   data: () => ({
     artistsFollowed: [],
-    titles: [
-      'event1',
-      'event2',
-      'event3',
-      'event4',
-      'event5',
-      'event6',
-      'event7',
-    ]
+    eventsCalendar: [],
+    userId: JSON.parse(localStorage.getItem('person')).id
   }),
   created() {
-    this.retrieveArtist();
+    this.retrieveFollowedArtists();
+    this.retrieveEvents();
   },
   methods:{
-    retrieveArtist() {
-      ArtistApiService.getAll()
+
+    retrieveFollowedArtists(){
+      FollowsApiService.getAll(this.userId)
       .then(response => {
         this.artistsFollowed = response.data;
-        console.log(this.artistsFollowed);
-      }).catch(e => { console.log(e);} )
+      }).catch(e => { console.log(e); })
     },
-    goToArtist(num){ return `/artist/${num}`; }
+    goToArtist(num){ return `/artist/${num}`; },
+    retrieveEvents(){
+      AssistancesApiService.getAll(this.userId).
+          then(response => {
+            this.eventsCalendar = response.data;
+            console.log(this.eventsCalendar);
+      }).catch(e => { console.log(e); })
+    },
+    goToEventId(item) {
+      this.$router.push(`/artist/${item.artistId}/event/${item.eventId}`);
+    }
   }
 }
 </script>
