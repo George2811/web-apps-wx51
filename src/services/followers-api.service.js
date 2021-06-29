@@ -5,9 +5,9 @@ class FollowersApiService {
         return http.get(`/artists/${artistId}/followers`);
     }
     assign(artistId, hobbyistId) {
-        return http.post(`/artists/${artistId}/followers`, hobbyistId);
+        return http.post(`/artists/${artistId}/followers/${hobbyistId}`);
     }
-    unassign(artistId, hobbyistId) {
+    unAssign(artistId, hobbyistId) {
         return http.delete(`/artists/${artistId}/followers/${hobbyistId}`);
     }
     count(artistId) {

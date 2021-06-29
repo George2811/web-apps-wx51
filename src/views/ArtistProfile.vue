@@ -20,7 +20,8 @@
         </div>
         <div class="profile-data d-flex flex-row justify-space-around mr-10">
           <div class="flex-column profile-contact">
-            <p><v-icon color="white">mdi-account-group</v-icon> 999 seguidores</p>
+            <p><v-icon color="white">mdi-account-group</v-icon>
+              {{ numFollowers }} seguidores</p>
             <p>Correo/num contacto</p>
           </div>
           <div class="flex-row justify-space-around px-12">
@@ -42,7 +43,8 @@
         </div>
       </v-card>
       <div class="float-right">
-        <v-btn class="mr-20 btn-color text-capitalize text-body-1 font-weight-bold">Seguir</v-btn>
+        <v-btn v-if="!isFollowed" class="mr-20 btn-color text-capitalize text-body-1 font-weight-bold" @click="followArtist">Seguir</v-btn>
+        <v-btn v-else class="mr-20 btn-uncolor text-capitalize text-body-2 font-weight-bold" @click="unfollowArtist">Dejar de seguir</v-btn>
       </div>
     </section>
 
@@ -111,10 +113,12 @@
 import ArtistApiService from '../services/artists-api.service'
 import ArtworksApiService from '../services/artworks-api.service'
 import EventsApiService from '../services/events-api.service'
+import FollowersApiService from '../services/followers-api.service'
 
 // Components
 import ArtworkCard from "../components/artwork-card";
 import ArtistEventCard from "../components/artist-event-card";
+import FollowsApiService from '../services/follows-api.service'
 
 export default {
   name: "ArtistProfile",
@@ -131,13 +135,9 @@ export default {
       events: [],
       page: 0,
       pageSize: 0,
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
+      numFollowers: 0,
+      isFollowed: false,
+      userId: JSON.parse(localStorage.getItem('person')).id,
       slides: [
         'First',
         'Second',
@@ -182,9 +182,41 @@ export default {
             console.log(this.events)
           }).catch(e => { console.log(e); })
     },
+    countFollowers(){
+      FollowersApiService.count(this.artistId)
+      .then(response => {
+        this.numFollowers = response.data;
+      }).catch(e => { console.log(e); })
+    },
+    isFollowing(){
+      FollowsApiService.getAll(this.userId)
+      .then(response => {
+        response.data.forEach(artist => {
+        console.log(artist);
+          if (artist.id === parseInt(this.artistId))
+            this.isFollowed = true;
+        });
+      }).catch(e => { console.log(e); })
+    },
+    followArtist(){
+      FollowersApiService.assign(this.artistId, this.userId).
+          then(response => {
+            console.log(response.data);
+            this.isFollowed = true;
+          }).catch(e => { console.log(e); })
+    },
+    unfollowArtist(){
+      FollowersApiService.unAssign(this.artistId, this.userId).
+      then(response => {
+        console.log(response.data);
+        this.isFollowed = false;
+      }).catch(e => { console.log(e); })
+    }
   },
   created() {
     this.retrieveArtist();
+    this.countFollowers();
+    this.isFollowing();
     this.retrieveArtworks(this.page);
     this.retrieveEvents();
   }
@@ -228,7 +260,10 @@ export default {
   min-height: 30px;
   background: radial-gradient(circle, rgba(203, 144, 40, 1) 0%, rgba(221, 0, 0, 1) 100%);
 }
-
+.btn-uncolor {
+  width: 130px;
+  min-height: 30px;
+}
 .image-profile {
   width: 20%;
 }
