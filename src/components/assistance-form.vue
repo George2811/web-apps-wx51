@@ -3,7 +3,7 @@
     <v-card class="mx-auto d-flex flex-column px-8" max-width="450" elevation="3">
       <v-card-title class="text-body-1 text-sm-h6">Selecciona una fecha de asistencia</v-card-title>
       <v-date-picker
-          v-model="assistance.assistanceDay"
+          v-model="assistanceDay"
           color="red"
           elevation="15"
           :min="this.minDate"
@@ -23,18 +23,18 @@
 
 <script>
 import EventApiService from '../services/events-api.service'
+import EventAssistancesApiService from '../services/event-assistances-api.service'
 export default {
   name: "assistance-form",
   data(){
     return{
       event: Object,
+      userId: JSON.parse(localStorage.getItem('person')).id,
       artistId: this.$route.params.artistId,
       eventId: this.$route.params.eventId,
       minDate: '',
       maxDate: '',
-      assistance:{
-        assistanceDay: ''
-      }
+      assistanceDay: ''
     }
   },
   created() {
@@ -53,8 +53,13 @@ export default {
       }).catch(e => { console.log(e); })
     },
     assign(){
-      //TODO: assign Hobbyist with Event
-      this.$router.go(-1);
+      if(!this.assistanceDay) return;
+      let jsonObject = JSON.stringify({'attendanceDay' : this.assistanceDay});
+      EventAssistancesApiService.assign(this.userId, this.eventId, jsonObject)
+        .then(response => {
+          console.log(response.data)
+          this.$router.go(-1);
+        }).catch(e => { console.log(e); })
     },
     parseToDate(date){
       let enterDate = new Date(date);
