@@ -17,11 +17,11 @@
 
     <!--Boton de asistencia-->
     <div class="asist">
-      <v-btn v-if="isScheduled" class="" raised @click="scheduledEvent" >
-        <v-icon class="mr-2">mdi-minus-circle</v-icon>Quitar
-      </v-btn>
-      <v-btn v-else class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent" :to="gotoAssistance">
+      <v-btn v-if="!isScheduled" class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent" :to="gotoAssistance">
         <v-icon class="mr-2">mdi-book-plus</v-icon>Agendar
+      </v-btn>
+      <v-btn  v-else class="" raised @click="unScheduleEvent" >
+        <v-icon class="mr-2">mdi-minus-circle</v-icon>Quitar
       </v-btn>
     </div>
     <br>
@@ -70,6 +70,7 @@
 
 <script>
 import EventsApiService from '../services/events-api.service'
+import EventAssistancesApiService from '../services/event-assistances-api.service'
 export default {
   name: "event-id",
   data() {
@@ -77,6 +78,7 @@ export default {
       artistId: this.$route.params.artistId,
       eventId: this.$route.params.eventId,
       event: Object,
+      userId: JSON.parse(localStorage.getItem('person')).id,
       isScheduled: false,
       items: [
         {
@@ -91,11 +93,12 @@ export default {
         {
           src: 'https://picsum.photos/id/1050/6000/4000.jpg',
         },
-      ]
+      ],
     }
   },
   created() {
     this.retrieveEvent();
+    this.isScheduledEvent();
   },
   methods:{
     parseToDate(date){
@@ -112,6 +115,26 @@ export default {
         this.event = response.data;
         console.log(this.event);
       }).catch(e => { console.log(e); })
+    },
+    isScheduledEvent(){
+      EventAssistancesApiService.getAll(this.userId)
+          .then(response => {
+            response.data.forEach(event => {
+              console.log(event);
+              if (event.eventId === parseInt(this.eventId))
+                this.isScheduled = true;
+            });
+          }).catch(e => { console.log(e); })
+    },
+    scheduleEvent(){
+
+    },
+    unScheduleEvent(){
+      EventAssistancesApiService.unAssign(this.userId, this.eventId)
+          .then(response => {
+            console.log(response.data);
+            this.isScheduled = false;
+          }).catch(e => { console.log(e); })
     }
   },
   computed:{
