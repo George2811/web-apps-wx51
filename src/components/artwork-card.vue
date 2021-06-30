@@ -1,7 +1,7 @@
 <template>
   <v-card class="artwork-card d-flex flex-column justify-space-between" max-width="270" elevation="3" height="445">
     <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        :src="getImage"
         alt="Photo"
         max-height="200"
     ></v-img>
@@ -34,10 +34,18 @@ export default {
   ],
   computed:{
     goToArtwork(){ return `/artist/${this.artwork.artistId}/artwork/${this.artwork.artworkId}`; },
-    artworkPrice(){return this.artwork.artCost===0?'Gratis': this.artwork.artCost; }
+    artworkPrice(){return this.artwork.artCost===0?'Gratis': this.artwork.artCost; },
+    getImage(){
+      return `https://picsum.photos/id/${this.getRandomNumber(1000,1060)}/3900/3120`;
+    }
   },
   components:{
     LoginDialog
+  },
+  methods: {
+    getRandomNumber(min, max){
+      return Math.floor(Math.random() * (max - min) + min);
+    }
   }
 }
 </script>
