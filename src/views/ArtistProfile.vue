@@ -43,8 +43,8 @@
         </div>
       </v-card>
       <div class="float-right">
-        <v-btn v-if="!isFollowed" class="mr-20 btn-color text-capitalize text-body-1 font-weight-bold" @click="followArtist">Seguir</v-btn>
-        <v-btn v-else class="mr-20 btn-uncolor text-capitalize text-body-2 font-weight-bold" @click="unfollowArtist">Dejar de seguir</v-btn>
+        <v-btn v-if="!isFollowed" class="mr-20 btn-color text-uppercase text-body-1 font-weight-bold" @click="followArtist">Seguir</v-btn>
+        <v-btn v-else class="mr-20 btn-uncolor text-uppercase text-body-2 font-weight-bold" @click="unfollowArtist">Dejar de seguir</v-btn>
       </div>
     </section>
 
@@ -260,7 +260,7 @@ export default {
   background: radial-gradient(circle, rgba(203, 144, 40, 1) 0%, rgba(221, 0, 0, 1) 100%);
 }
 .btn-uncolor {
-  width: 130px;
+  width: 140px;
   min-height: 30px;
 }
 .image-profile {

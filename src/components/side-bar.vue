@@ -60,7 +60,6 @@ export default {
     this.retrieveEvents();
   },
   methods:{
-
     retrieveFollowedArtists(){
       FollowsApiService.getAll(this.userId)
       .then(response => {

@@ -30,8 +30,8 @@
         <v-icon>mdi-account-group</v-icon>
         {{getRandomNumber(500)}}
       </v-btn>
-      <login-dialog v-if="!logged" text="Conocer"></login-dialog>
-      <v-btn v-else color="error" :to="goToArtist">Conocer</v-btn>
+      <login-dialog v-if="!logged" text="CONOCER"></login-dialog>
+      <v-btn v-else color="error" class="text-uppercase" :to="goToArtist">Conocer</v-btn>
     </v-card-actions>
   </v-card>
 </template>

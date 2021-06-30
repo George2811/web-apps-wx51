@@ -17,8 +17,13 @@
                 maxlength="100"
             ></v-text-field>
             <!--Fecha de Inicio y de Fin-->
+            <div class="d-flex flex-row justify-space-around">
+              <div class="text-center text-h6" >Fecha Inicio</div>
+              <div class="text-center text-h6" >Fecha Fin</div>
+            </div>
             <br>
           <v-row justify="space-around">
+
             <v-date-picker
                 v-model="event.dateStart"
                 color="red"
