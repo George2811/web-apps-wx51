@@ -16,7 +16,7 @@
     <br>
 
     <!--Boton de asistencia-->
-    <div class="asist">
+    <div class="asist" v-if="!isArtist">
       <v-btn v-if="!isScheduled" class="text-toolbar-btn mr-4 white--text btn-color" @click="scheduledEvent" :to="gotoAssistance">
         <v-icon class="mr-2">mdi-book-plus</v-icon>Agendar
       </v-btn>
@@ -77,6 +77,7 @@ export default {
     return {
       artistId: this.$route.params.artistId,
       eventId: this.$route.params.eventId,
+      isArtist: JSON.parse(localStorage.getItem('person')).brandName,
       event: Object,
       userId: JSON.parse(localStorage.getItem('person')).id,
       isScheduled: false,

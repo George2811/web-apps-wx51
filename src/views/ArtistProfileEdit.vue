@@ -259,7 +259,7 @@
         <v-card-title v-if="events.length===0" class="darken-2 text-body-1 justify-center">Aún no cuentas con eventos.</v-card-title>
         <v-btn class="agregar" to="/event/new">Agregar +</v-btn>
         <v-carousel
-            height="400"
+            height="500"
             hide-delimiter-background
             show-arrows-on-hover
             light
@@ -526,7 +526,7 @@ export default {
 .cambios{
   left: 50%;
   transform:translateX(-50%);
-  top: 100%;
+  top: 110%;
   background: linear-gradient(90deg, rgba(236, 187, 61, 1) 0%, rgba(223, 0, 0, 1) 100%);
 }
 

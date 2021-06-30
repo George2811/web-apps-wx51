@@ -38,7 +38,7 @@
           <v-icon color="red">mdi-share-variant</v-icon>
           Compartir
         </v-btn>
-        <v-btn v-if="isFavorite"
+        <v-btn v-if="isFavorite && !isArtist"
             class="mx-4"
             fab
             small
@@ -49,7 +49,7 @@
             mdi-heart
           </v-icon>
         </v-btn>
-        <v-btn v-else
+        <v-btn v-if="!isFavorite && !isArtist"
             class="mx-4"
             fab
             small
@@ -115,6 +115,7 @@ export default {
       dialog: false,
       artistId : this.$route.params.artistId,
       artworkId : this.$route.params.artworkId,
+      isArtist: JSON.parse(localStorage.getItem('person')).brandName,
       artwork : Object,
       userId: JSON.parse(localStorage.getItem('person')).id,
       items: [

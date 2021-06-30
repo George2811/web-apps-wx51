@@ -3,8 +3,8 @@
       <v-toolbar dense  height="70px" clipped-left>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
         <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4 mr-3">PeruStars</v-toolbar-title>
-        <v-btn v-if="loggedIn" class="text-toolbar-btn ml-1 hidden-sm-and-down" plain to="/home"><v-icon>mdi-home</v-icon>Home</v-btn>
-        <v-btn v-if="loggedIn" class="text-toolbar-btn hidden-sm-and-down" plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favorites</v-btn>
+        <v-btn v-if="loggedIn" class="text-toolbar-btn ml-1 hidden-sm-and-down" plain :to="goByUser"><v-icon>mdi-home</v-icon>Home</v-btn>
+        <v-btn v-if="loggedIn" class="text-toolbar-btn hidden-sm-and-down" plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favoritos</v-btn>
         <v-spacer></v-spacer>
         <div v-if="!loggedIn" class="hidden-sm-and-down">
           <v-btn class="text-toolbar-btn mr-4 red--text" elevation="0" text-to="/" to="/">Home</v-btn>
@@ -60,7 +60,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="() => {}">
+            <v-list-item v-if="true" @click="() => {}">
               <v-list-item-title class="text-body-2">
                 <router-link class=" text-body-2" to="/hobbyist/profile">
                   <v-icon size="2rem px-5">mdi-account-edit</v-icon>Perfil
@@ -93,6 +93,7 @@ export default {
     return{
       drawer: null,
       name: '',
+      isArtist: JSON.parse(localStorage.getItem('person')).brandName,
       buttonsList: [
         {name:'Home', icon: 'mdi-home', path: '/'},
         {name:'About', icon: 'mdi-information', path: '/about'},
@@ -112,8 +113,10 @@ export default {
     },
     getToolbarName(){
       return JSON.parse(localStorage.getItem('person')).brandName || JSON.parse(localStorage.getItem('person')).firstname;
+    },
+    goByUser() {
+      return this.isArtist? '/home/artist/profile' : '/home';
     }
-
   },
   methods:{
     handleLogout(){
@@ -142,7 +145,7 @@ export default {
             this.person = response.data;
           }).catch(e => { console.log(e); });
     }
-  }
+  },
 }
 </script>
 

@@ -22,6 +22,7 @@
       <v-card-actions class="d-flex">
         <v-btn class="btn-color text-capitalize text-body-1 font-weight-bold mr-5" :to="goToEvent">Ver más</v-btn>
         <v-btn
+            v-if="!isArtist"
             class="ma-2"
             small
             fab
@@ -43,7 +44,8 @@ export default {
   components: {},
   data(){
     return{
-      isScheduled: false
+      isScheduled: false,
+      isArtist: JSON.parse(localStorage.getItem('person')).brandName,
     }
   },
   created() {
