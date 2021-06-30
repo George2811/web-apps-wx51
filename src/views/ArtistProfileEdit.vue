@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form>
     <section>
       <div class="shape">
         <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
@@ -9,7 +9,7 @@
       </div>
       <v-card class="d-flex flex-row mx-10 mt-10 top-content" color="transparent" elevation="0">
         <div class="cont">
-          <v-card-title class="d-block text-left ml-5 white--text text-h5 font-weight-bold">Artist Name</v-card-title>
+          <v-card-title style="width: 320px" class="d-block text-left ml-0 white--text text-h5 font-weight-bold mx-auto">{{ brandName }}</v-card-title>
           <v-img
               src="../assets/img/amateur.jpg"
               alt="artist image"
@@ -17,20 +17,103 @@
               class="img"
           >
           </v-img>
-          <v-btn class="btn" fab dark color="deep-orange darken-2">
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
+          <v-dialog v-model="informationDialog" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn class="btn" fab dark color="deep-orange darken-2" v-bind="attrs" v-on="on">
+                <v-icon dark>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Información del Artista</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                          v-model="firstName"
+                          label="Nombre*"
+                          required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                          v-model="lastName"
+                          label="Apellido*"
+                          required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                          v-model="brandName"
+                          label="Apodo*"
+                          required
+                      ></v-text-field>
+                    </v-col>
+
+                  </v-row>
+                </v-container>
+                <small>*Todos los campos son requeridos</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="error"
+                    text
+                    @click="informationDialog = false"
+                >
+                  Aceptar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
         <div class="profile-data d-flex flex-row justify-space-around mr-10">
           <v-container class="flex-column profile-contact">
-            <p>xxx seguidores</p>
-            <p>Correo/num contacto
-              <v-btn class="ml-3" small fab dark color="deep-orange darken-2">
-                <v-icon dark>mdi-pencil</v-icon>
-              </v-btn>
+            <p class="font-weight-bold">Specialidad</p>
+            <p>{{ specialty.name }}
+
+              <v-dialog
+                  v-model="specialtyDialog"
+                  scrollable
+                  max-width="300px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="ml-3" small fab dark color="deep-orange darken-2" v-bind="attrs" v-on="on">
+                    <v-icon dark>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>Elige una especialidad</v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text style="height: 300px;">
+                    <v-radio-group
+                        v-model="specialty"
+                        column
+                    >
+                      <v-radio
+                          v-for="(specialty) in specialties" :key="specialty.id"
+                          :label="specialty.name"
+                          :value="specialty"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-card-text>
+                  <v-divider></v-divider>
+                  <v-card-actions>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="specialtyDialog = false"
+                    >
+                      Aceptar
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </p>
           </v-container>
-          <v-container class="flex-column">
+          <v-container class="flex-column" style="width: 450px">
             <div class="flex-row justify-space-around px-12">
               <v-btn href="https://es-la.facebook.com/" target="_blank" color="transparent" elevation="0" fab>
                 <v-icon class="text-h4" color="white">mdi-facebook</v-icon>
@@ -47,12 +130,45 @@
             </v-btn>
           </v-container>
           <v-container class="flex-column">
-            <p class="text-center">"Aquí va texto de una frase célebre Aquí va texto de una frase célebre Aquí va texto
-              de una frase célebre
-              Aquí va texto de una frase célebre"</p>
-            <v-btn class="mt-5" small fab dark color="deep-orange darken-2">
-              <v-icon dark>mdi-pencil</v-icon>
-            </v-btn>
+            <p class="text-center" style="max-width: 350px">"{{phrase}}"</p>
+            <v-dialog v-model="phraseDialog" persistent max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="mt-5" small fab dark color="deep-orange darken-2" v-bind="attrs" v-on="on">
+                  <v-icon dark>mdi-pencil</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="text-h5">Frase</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                            v-model="phrase"
+                            :rules="rulesPhrase"
+                            required
+                            counter
+                            maxlength="190"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <small>*El campo es requerido.</small>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="error"
+                      text
+                      @click="phraseDialog = false"
+                  >
+                    Aceptar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-container>
         </div>
       </v-card>
@@ -62,14 +178,48 @@
       <v-card elevation="0" class="ml-15 mb-16">
         <v-card-title class="text-h5 font-weight-medium">
           ¿Quién soy?
-          <v-btn class="ml-3" x-small fab dark color="deep-orange darken-2">
-            <v-icon dark>mdi-pencil</v-icon>
-          </v-btn>
+          <v-dialog v-model="descriptionDialog" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn class="ml-3" x-small fab dark color="deep-orange darken-2" v-bind="attrs" v-on="on">
+                <v-icon dark>mdi-pencil</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Descripción</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-textarea
+                          v-model="description"
+                          color="error"
+                          :rules="rulesDescription"
+                          required
+                          counter
+                          maxlength="250"
+                      >
+                      </v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*El campo es requerido.</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="error"
+                    text
+                    @click="descriptionDialog = false"
+                >
+                  Aceptar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-card-title>
-        <p class="description-p">"Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
-          descripción Aquí va
-          texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su
-          descripción."</p>
+        <p class="description-p">{{description}}</p>
 
       </v-card>
     </section>
@@ -79,7 +229,7 @@
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
           <v-btn class="agregar" to="/artwork/new">Agregar +</v-btn>
         <div class="d-flex flex-row align-center">
-          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previusPage"
+          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previousPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text">mdi-chevron-left</v-icon>
           </v-btn>
@@ -126,15 +276,18 @@
             absolute
             top
             class="cambios"
+            @click="createArtist"
         >
           Aplicar Cambios
         </v-btn>
       </v-card>
     </section>
-  </div>
+  </v-form>
 </template>
 
 <script>
+import SpecialtiesApiService from '../services/specialties-api.service'
+import ArtistsApiService from '../services/artists-api.service'
 
 import ArtworkCard from "../components/artwork-card";
 import ArtistEventCard from "../components/artist-event-card";
@@ -144,6 +297,10 @@ export default {
   components: {ArtistEventCard, ArtworkCard},
   data() {
     return {
+      informationDialog: false,
+      specialtyDialog: false,
+      phraseDialog: false,
+      descriptionDialog: false,
       page: 1,
       pageLength: 3,
       pageSize: 3,
@@ -159,13 +316,6 @@ export default {
         {Name: 'Nombre8', Description: 'Descripti6on'},
       ],
       showingArtworks: [],
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
       slides: [
         'First',
         'Second',
@@ -173,6 +323,19 @@ export default {
         'Fourth',
         'Fifth',
       ],
+      phrase: 'Aquí va texto de una frase célebre Aquí va texto de una frase célebre Aquí va textode una frase célebre Aquí va texto de una frase célebre',
+      description: 'Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción',
+      brandName: 'Nombre Artista',
+      firstName: '',
+      lastName: '',
+      specialty:{
+        id: 0,
+        name: 'Ninguna'
+      },
+      rulesPhrase: [v => v.length <= 190 || 'Max 190 characters'],
+      rulesDescription: [v => v.length <= 250 || 'Max 250 characters'],
+      specialties: [],
+      userId: JSON.parse(localStorage.getItem('user')).id
     }
   },
   methods: {
@@ -184,7 +347,7 @@ export default {
         this.artworks[(this.page - 1) * this.pageSize + 2]
       ]
     },
-    previusPage() {
+    previousPage() {
       if (this.page > 1) {
         this.page--;
         this.updateArtworksPage();
@@ -195,11 +358,37 @@ export default {
         this.page++;
         this.updateArtworksPage();
       }
+    },
+    retrieveSpecialties(){
+      SpecialtiesApiService.getAll()
+      .then(response => {
+        this.specialties = response.data;
+      }).catch(e => { console.log(e); })
+    },
+    getJsonObject(){
+      return JSON.stringify({
+        "firstname": this.firstName,
+        "lastname": this.lastName,
+        "userId": parseInt(this.userId),
+        "brandName": this.brandName,
+        "description": this.description,
+        "phrase": this.phrase,
+        "specialtyId": this.specialty.id
+      })
+    },
+    createArtist(){
+      console.log(this.getJsonObject());
+      ArtistsApiService.create(this.getJsonObject())
+          .then(response => {
+            console.log(response.data)
+          }).catch(e => { console.log(e); })
     }
   },
   created() {
     this.updateArtworksPage();
+    this.retrieveSpecialties();
   }
+
 }
 </script>
 
@@ -260,7 +449,6 @@ export default {
 }
 
 .cont{
-
   margin-left: 10px;
   margin-right: 5px;
 }
