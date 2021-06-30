@@ -38,6 +38,7 @@ export default {
     getImage(){
       return `https://picsum.photos/id/${this.getRandomNumber(1000,1060)}/3900/3120`;
     }
+    // static image src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
   },
   components:{
     LoginDialog

@@ -1,7 +1,7 @@
 <template>
   <v-card class="event-card d-flex flex-column justify-space-between" max-width="270" height="380" elevation="3">
     <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
+        :src="getImage"
         alt="Photo"
         max-height="200"
     ></v-img>
@@ -32,7 +32,10 @@ export default {
     'event'
   ],
   computed:{
-    goToEvent(){ return `artist/${this.event.artistId}/event/${this.event.eventId}`; }
+    goToEvent(){ return `artist/${this.event.artistId}/event/${this.event.eventId}`; },
+    getImage(){
+      return `https://picsum.photos/id/${this.getRandomNumber(1050,1060)}/3900/3120`;
+    }
   },
   components:{
     LoginDialog
@@ -42,6 +45,9 @@ export default {
       let actualMonth = new Date(date);
       actualMonth.setMonth(actualMonth.getMonth()+1);
       return `${new Date(date).getDate()}/${actualMonth.getUTCMonth()}/${new Date(date).getFullYear()}`;
+    },
+    getRandomNumber(min, max){
+      return Math.floor(Math.random() * (max - min) + min);
     }
   }
 }
