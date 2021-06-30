@@ -227,16 +227,17 @@
     <section class="artworks-section">
       <v-card class="mx-10 mt-5 mb-13" elevation="0" color="transparent">
         <v-card-title class="white--text text-h5 font-weight-bold">Mis obras de arte</v-card-title>
-          <v-btn class="agregar" to="/artwork/new">Agregar +</v-btn>
+        <v-card-title v-if="pageSize===0" class="white--text text-body-1 justify-center">Aún no cuentas con obras publicadas.</v-card-title>
+        <v-btn class="agregar" to="/artwork/new">Agregar +</v-btn>
         <div class="d-flex flex-row align-center">
-          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="previousPage"
+          <v-btn :disabled="page===0" elevation="0" height="auto" width="100px" color="transparent" v-on:click="previousPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text">mdi-chevron-left</v-icon>
           </v-btn>
           <v-list-item-content class="d-flex flex-row justify-space-between justify-center px-10">
-            <artwork-card v-for="(artwork, i) in showingArtworks" :key="i"></artwork-card>
+            <artwork-card v-for="(artwork, i) in showingArtworks" :key="i" :artwork="artwork" :logged="true"></artwork-card>
           </v-list-item-content>
-          <v-btn elevation="0" height="auto" width="100px" color="transparent" v-on:click="nextPage"
+          <v-btn :disabled="(page+3)===pageSize" elevation="0" height="auto" width="100px" color="transparent" v-on:click="nextPage"
                  class="rounded-circle">
             <v-icon class="text-h1 white--text rounded-circle">mdi-chevron-right</v-icon>
           </v-btn>
@@ -245,8 +246,6 @@
           <div class="text-center d-none">
             <v-pagination
                 v-model="page"
-                v-on:input="updateArtworksPage"
-                :length="this.pageLength"
                 circle
             ></v-pagination>
           </div>
@@ -257,6 +256,7 @@
     <section>
       <v-card class="mx-10 mt-5 mb-15" elevation="0" color="transparent">
         <v-card-title class="text-h5 font-weight-medium">Futuros eventos</v-card-title>
+        <v-card-title v-if="events.length===0" class="darken-2 text-body-1 justify-center">Aún no cuentas con eventos.</v-card-title>
         <v-btn class="agregar" to="/event/new">Agregar +</v-btn>
         <v-carousel
             height="400"
@@ -264,9 +264,9 @@
             show-arrows-on-hover
             light
         >
-          <v-carousel-item v-for="(event, i) in showingArtworks" :key="i">
+          <v-carousel-item v-for="(event, i) in events" :key="i">
             <v-sheet height="100%" class="d-flex justify-center align-center">
-              <artist-event-card :title="event.Name"></artist-event-card>
+              <artist-event-card :event="event"></artist-event-card>
             </v-sheet>
           </v-carousel-item>
         </v-carousel>
@@ -303,6 +303,8 @@ import ArtistsApiService from '../services/artists-api.service'
 
 import ArtworkCard from "../components/artwork-card";
 import ArtistEventCard from "../components/artist-event-card";
+import ArtworksApiService from "../services/artworks-api.service";
+import EventsApiService from "../services/events-api.service";
 
 export default {
   name: "ArtistProfile",
@@ -313,21 +315,10 @@ export default {
       specialtyDialog: false,
       phraseDialog: false,
       descriptionDialog: false,
-      page: 1,
       pageLength: 3,
-      pageSize: 3,
-      artworks: [
-        {Name: 'Nombre', Description: 'Description1'},
-        {Name: 'Nombre1', Description: 'Description2'},
-        {Name: 'Nombre2', Description: 'Description3'},
-        {Name: 'Nombre3', Description: 'Descriptio4n'},
-        {Name: 'Nombre4', Description: 'Descriptio5n'},
-        {Name: 'Nombre5', Description: 'Descript6ion'},
-        {Name: 'Nombre6', Description: 'Descripti6on'},
-        {Name: 'Nombre7', Description: 'Descripti6on'},
-        {Name: 'Nombre8', Description: 'Descripti6on'},
-      ],
+      artworks: [],
       showingArtworks: [],
+      events: [],
       slides: [
         'First',
         'Second',
@@ -349,29 +340,40 @@ export default {
       specialties: [],
       userId: JSON.parse(localStorage.getItem('user')).id,
       firsTimeLogged: false,
-      personId: 0
+      personId: 0,
+      page: 0,
+      pageSize: 0,
+      artistId: JSON.parse(localStorage.getItem('person')).id,
     }
   },
   methods: {
-    updateArtworksPage() {
-      console.log(this.page);
-      this.showingArtworks = [
-        this.artworks[(this.page - 1) * this.pageSize],
-        this.artworks[(this.page - 1) * this.pageSize + 1],
-        this.artworks[(this.page - 1) * this.pageSize + 2]
-      ]
-    },
     previousPage() {
-      if (this.page > 1) {
+      if (this.page > 0){
         this.page--;
-        this.updateArtworksPage();
+        this.retrieveArtworks(this.page);
       }
     },
     nextPage() {
-      if (this.page < this.pageLength) {
+      if ((this.page + 3) < this.pageSize){
         this.page++;
-        this.updateArtworksPage();
+        this.retrieveArtworks(this.page);
       }
+    },
+    retrieveArtworks(num){
+      ArtworksApiService.getAll(this.artistId)
+          .then(response => {
+            console.log(response.data)
+            this.artworks = response.data;
+            this.pageSize = this.artworks.length;
+            this.showingArtworks = this.artworks.slice(num,num+3);
+          }).catch(e => { console.log(e); })
+    },
+    retrieveEvents(){
+      EventsApiService.getAllByArtistId(this.artistId)
+          .then(response => {
+            this.events = response.data;
+            //console.log(this.events)
+          }).catch(e => { console.log(e); })
     },
     retrieveSpecialties(){
       SpecialtiesApiService.getAll()
@@ -433,9 +435,10 @@ export default {
     }
   },
   created() {
-    this.updateArtworksPage();
     this.existsArtist();
     this.retrieveSpecialties();
+    this.retrieveArtworks(this.page);
+    this.retrieveEvents();
   }
 
 }

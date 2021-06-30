@@ -120,7 +120,7 @@ export default {
             this.$store.dispatch('auth/savePerson', response.data);
             //this.$store.state.auth.person = response.data;
             //localStorage.setItem('person',JSON.stringify(response.data));
-          this.$router.push(`/artist/${response.data.id}`);
+          this.$router.push('/home/artist/profile');
           }).catch(e =>{
         console.log(e);
       });

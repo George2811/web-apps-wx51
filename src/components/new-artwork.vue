@@ -1,5 +1,5 @@
 <template>
-<div class="all">
+<div class="all col-10 mx-auto my-12">
 <v-card class="card">
   <!--Titulo-->
   <v-card-title class="Titulo">
@@ -7,22 +7,30 @@
   </v-card-title>
   <!--Texto-->
   <v-card-text>
-    <v-form>
+    <v-form v-model="valid">
     <v-container>
       <v-text-field
           v-model="artwork.artTitle" label="Titulo de la obra"
           required
           :rules="formRule.title"
       ></v-text-field>
-      <v-text-field
+<!--      <v-text-field-->
+<!--          v-model="artwork.artDescription" label="¿De que trata tu obra?"-->
+<!--          required-->
+<!--          :rules="formRule.description"-->
+<!--          :counter=250-->
+<!--      ></v-text-field>-->
+      <v-textarea
           v-model="artwork.artDescription" label="¿De que trata tu obra?"
-          required
+          color="primary"
           :rules="formRule.description"
-          :counter=250
-      ></v-text-field>
+          required
+          counter
+          maxlength="250"
+      >
+      </v-textarea>
       <v-text-field
           v-model="artwork.artCost" label="S/.Valor"
-          required
           :rules="formRule.cost"
       ></v-text-field>
       <v-text-field
@@ -36,7 +44,7 @@
   <div class="botones">
   <v-card-actions>
     <v-btn text @click="$router.go(-1)">Retroceder</v-btn>
-    <v-btn text @click="save" class="crear-btn">Crear</v-btn>
+    <v-btn type="submit" color="error" :disabled="!valid" @click="saveArtwork">Crear</v-btn>
   </v-card-actions>
   </div>
 </v-card>
@@ -45,12 +53,14 @@
 
 <script>
 /*Aqui falta Axios*/
-/*import ArtworksApiService from ''*/
+import ArtworksApiService from '../services/artworks-api.service'
 
 export default {
   name: "new-artwork",
   data(){
     return{
+      valid: false,
+      artistId: JSON.parse(localStorage.getItem('person')).id,
       artwork:{
         artTitle: '',
         artDescription: '',
@@ -63,21 +73,29 @@ export default {
         ],
         cost:[
             v=> v>=0||'Este valor no puede ser negativo'
+        ],
+        description:[
+          v => v.length <= 250 || 'Max 250 characters',
+          v => !!v || 'La descripción es requerida'
         ]
       }
     }
   },
   methods: {
-    save(){
-      /* aqui hay que guiarnos segun el service
-      ArtworksApiService.create(this.artwork)
-          .then(() => {
-            this.navigateToTutorials();
-          })
-          .catch(e => {
-            console.log(e);
-          })
-       */
+    getJsonObject(){
+      return JSON.stringify({
+        "artTitle": this.artwork.artTitle,
+        "artDescription": this.artwork.artDescription,
+        "artCost": this.artwork.artCost || 0,
+        "linkInfo": this.artwork.linkInfo
+      })
+    },
+    saveArtwork(){
+      ArtworksApiService.create(this.artistId, this.getJsonObject())
+      .then(response => {
+        console.log(response.data);
+        this.$router.go(-1);
+      }).catch(e => { console.log(e); })
     }
   }
 }
@@ -90,9 +108,4 @@ export default {
 .botones{
   display: flex;
 }
-.crear-btn{
-  color: white;
-  background: linear-gradient(175deg, #ff9143 0, #ff824a 12.5%, #ff734e 25%, #ff6352 37.5%, #f25353 50%, #df4453 62.5%, #cd3753 75%, #bd2c54 87.5%, #ae2455 100%);
-}
-
 </style>
