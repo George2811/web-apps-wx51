@@ -49,7 +49,6 @@
       </div>
       <v-card-actions class="d-flex justify-center">
         <v-btn class="text-capitalize text-body-2" color="error" :disabled="!valid" type="submit">Register</v-btn>
-        <v-btn class="text-capitalize text-body-2" color="error">Prueba</v-btn>
       </v-card-actions>
     </v-form>
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">

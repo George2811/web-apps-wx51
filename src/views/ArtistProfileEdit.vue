@@ -150,7 +150,7 @@
                             :rules="rulesPhrase"
                             required
                             counter
-                            maxlength="190"
+                            maxlength="100"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -271,12 +271,24 @@
           </v-carousel-item>
         </v-carousel>
         <v-btn
+            v-if="firsTimeLogged"
             color="error"
             dark
             absolute
             top
             class="cambios"
             @click="createArtist"
+        >
+          Crear Perfil
+        </v-btn>
+        <v-btn
+            v-else
+            color="error"
+            dark
+            absolute
+            top
+            class="cambios"
+            @click="updateArtist"
         >
           Aplicar Cambios
         </v-btn>
@@ -323,7 +335,7 @@ export default {
         'Fourth',
         'Fifth',
       ],
-      phrase: 'Aquí va texto de una frase célebre Aquí va texto de una frase célebre Aquí va textode una frase célebre Aquí va texto de una frase célebre',
+      phrase: 'Aquí va texto de una frase célebre Aquí va texto de una frase célebre Aquí va textode una frase célebre',
       description: 'Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción Aquí va texto de su descripción',
       brandName: 'Nombre Artista',
       firstName: '',
@@ -332,10 +344,12 @@ export default {
         id: 0,
         name: 'Ninguna'
       },
-      rulesPhrase: [v => v.length <= 190 || 'Max 190 characters'],
+      rulesPhrase: [v => v.length <= 100 || 'Max 100 characters'],
       rulesDescription: [v => v.length <= 250 || 'Max 250 characters'],
       specialties: [],
-      userId: JSON.parse(localStorage.getItem('user')).id
+      userId: JSON.parse(localStorage.getItem('user')).id,
+      firsTimeLogged: false,
+      personId: 0
     }
   },
   methods: {
@@ -365,6 +379,12 @@ export default {
         this.specialties = response.data;
       }).catch(e => { console.log(e); })
     },
+    retrieveSpecialty(id){
+      SpecialtiesApiService.get(id)
+      .then(response => {
+        this.specialty = response.data;
+      })
+    },
     getJsonObject(){
       return JSON.stringify({
         "firstname": this.firstName,
@@ -382,10 +402,39 @@ export default {
           .then(response => {
             console.log(response.data)
           }).catch(e => { console.log(e); })
+    },
+    updateArtist(){
+      ArtistsApiService.update(this.personId, this.getJsonObject())
+          .then(response => {
+            console.log(response.data);
+            this.firsTimeLogged = true;
+          }).catch(e => { console.log(e); })
+    },
+    existsArtist(){
+      ArtistsApiService.getByUserId(this.userId)
+      .then(response =>{
+        this.$store.dispatch('auth/savePerson', response.data);
+        this.saveProfileData(response.data);
+        this.firsTimeLogged = false;
+        console.log(response.data);
+      }).catch(e => {
+        console.log(e);
+        this.firsTimeLogged = true;
+      })
+    },
+    saveProfileData(person){
+      this.firstName = person.firstname;
+      this.lastName = person.lastname;
+      this.brandName = person.brandName;
+      this.description = person.description;
+      this.phrase = person.phrase;
+      this.personId = person.id;
+      this.retrieveSpecialty(person.specialtyId);
     }
   },
   created() {
     this.updateArtworksPage();
+    this.existsArtist();
     this.retrieveSpecialties();
   }
 
