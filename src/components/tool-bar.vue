@@ -3,7 +3,7 @@
       <v-toolbar dense  height="70px" clipped-left>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
         <v-toolbar-title class="red--text font-weight-bold text-h4 ml-4 mr-3">PeruStars</v-toolbar-title>
-        <v-btn v-if="loggedIn" class="text-toolbar-btn ml-1 hidden-sm-and-down" plain :to="goByUser"><v-icon>mdi-home</v-icon>Home</v-btn>
+        <v-btn v-if="loggedIn" class="text-toolbar-btn ml-1 hidden-sm-and-down" plain to="/home"><v-icon>mdi-home</v-icon>Home</v-btn>
         <v-btn v-if="loggedIn" class="text-toolbar-btn hidden-sm-and-down" plain to="/hobbyist/artworks"><v-icon>mdi-star</v-icon>Favoritos</v-btn>
         <v-spacer></v-spacer>
         <div v-if="!loggedIn" class="hidden-sm-and-down">
